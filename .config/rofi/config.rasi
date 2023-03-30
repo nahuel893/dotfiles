@@ -1,0 +1,9 @@
+//@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+@import "/home/nahuel/.local/share/rofi/themes/squared-material-red.rasi"
+//@theme "/home/nahuel/.local/share/rofi/themes/rounded-nord-dark.rasi"
+
+configuration {
+    show-icons: true; 
+}
+//@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"

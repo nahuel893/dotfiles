@@ -1,0 +1,206 @@
+ set mouse=a
+set numberwidth=1 
+set laststatus=2
+syntax enable 
+set clipboard+=unnamedplus
+set showcmd
+set ruler 
+set encoding=utf-8
+set showmatch
+set sw=2
+set relativenumber
+set showtabline=2
+"identacion:
+"
+set ts=4
+set sts=4
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set autoindent
+"set rtp+=~/tabnine-vim
+"identeacion para html autocmd BufRead,BufNewFile *.htm,*.html setlocal tabstop=4 shiftwidth=4 softtabstop=4 """"""""
+set t_Co=256
+syntax on
+set ai
+set cindent
+set nocompatible
+filetype off
+"autoclose
+"inoremap " ""<left>
+"inoremap ' ''<left>
+"inoremap ( ()<left>
+"inoremap [ []<left>
+"inoremap { {}<left>
+"inoremap {<CR> {<CR>}<ESC>O
+"inoremap {;<CR> {<CR>};<ESC>O
+""doble cierre cancelado
+"auto close {
+function! s:CloseBracket()
+    let line = getline('.')
+    if line =~# '^\s*\(struct\|class\|enum\) '
+        return "{\<Enter>};\<Esc>O"
+    elseif searchpair('(', '', ')', 'bmn', '', line('.'))
+        " Probably inside a function call. Close it off.
+        return "{\<Enter>});\<Esc>O"
+    else
+        return "{\<Enter>}\<Esc>O"
+    endif
+endfunction
+inoremap <expr> {<Enter> <SID>CloseBracket()
+inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+call plug#begin('~/.local/share/nvim/plugged')
+" ------------------------------------------------------
+Plug 'easymotion/vim-easymotion' " busca una palabra en el texto mostrado
+Plug 'dracula/vim', { 'name': 'dracula' } "tema dracula 
+Plug 'preservim/nerdtree' " permite navegar entre archivos 
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'morhetz/gruvbox' " un tema muy bueno de vim
+Plug 'tomasr/molokai'
+Plug 'joshdick/onedark.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'sickill/vim-monokai'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'mhartington/oceanic-next'
+Plug 'vim-airline/vim-airline-themes'
+"autocompletado
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+",Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"temas
+Plug 'rakr/vim-one'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'Rigellute/shades-of-purple.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'frazrepo/vim-rainbow'
+Plug 'gko/vim-coloresque'
+
+"Desarrollo WEB
+Plug 'Yggdroot/indentLine'
+Plug 'AndrewRadev/tagalong.vim'
+
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'luochen1990/rainbow'
+"Personalizacion
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'jacoborus/tender.vim'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'ericbn/vim-solarized'
+Plug 'gmoe/vim-espresso'
+Plug 'itchyny/lightline.vim'
+" Python
+Plug 'nvie/vim-flake8'
+Plug 'dense-analysis/ale' 
+Plug 'gryf/pylint-vim' 
+" Comentarios
+Plug 'tpope/vim-commentary' " comentarios en la seleccion con g - c
+Plug 'liuchengxu/vista.vim' "barra de etiquetas
+
+" ------------------------------------------------------
+call plug#end()
+
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+" Configuracion de Temas
+set background=dark
+colorscheme gruvbox 
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ }
+set termguicolors
+
+"set bg=dark
+" Theme
+"syntax enable
+"syntax on
+"let g:oceanic_next_terminal_bold = 1
+"let g:oceanic_next_terminal_italic = 1
+
+
+"establecer transparencia
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
+
+"linias de identado
+"==============================0
+"config coc para lenguajes
+autocmd Filetype python let b:coc_suggest_disable = 1
+" Use taon
+
+" Use <c-space> to trigger completion.
+
+filetype plugin indent on
+
+" ------------------------------------------------------
+let mapleader=","
+nmap <Leader>s <Plug>(easymotion-s2)
+
+"Bracey
+nmap <Leader>b :Bracey<CR>
+"pestañas
+
+nmap <Leader>j :tabnew<CR>
+nmap <Leader>l :tabn  <CR>
+nmap <Leader>h :tabp  <CR>
+
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"Con ctrl + h,j,k,l se uno se puede mover entre terminales abiertos (archivos,
+"archivos y nerdtree, etc) 
+
+
+"deoplete config
+"activar deoplete al iniciar Neovim
+let g:deoplete#enable_at_startup = 1
+
+" Cerrar automaticamente la ventana de vista previa (donde se muestra
+" documentación, si existe)
+augroup deopleteCompleteDoneAu
+  autocmd!
+  autocmd CompleteDone * silent! pclose!
+augroup END
+"supertab config
+let g:SuperTabDefaultCompletionType = '<c-n>'
+
+
+"atajos personalizados 
+nmap <Leader>w :w<CR>
+nmap <Leader>q :q<CR>
+nmap <Leader>v :Vista!!<CR>
+" Colores en alacritty
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b = "\<Esc>[48:2;%lu;%lu;%lum"
+
+
+"activar transparencia
+"''''''''''''
+"airline
+let g:airline#extensions#tabline#enabled = 1
+"Prettier
+nmap <Leader>p :Prettier<CR>
+
+" neosnippet
+let g:neosnippet#enable_completed_snippet = 1
+"emmet vim configuracion
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+"resaltar linea
+set cursorline
+"set cursorcolumn
+"auto save
+:au FocusLost * :wa
+
+au FileType c,cpp,objc,objcpp call rainbow#load()
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
