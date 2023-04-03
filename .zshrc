@@ -83,7 +83,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+#   export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -99,17 +99,17 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias kconf="vim /home/nahuel/.config/kitty/kitty.conf"
-alias zshrc="vim /home/nahuel/.zshrc"
+alias kconf="nvim /home/nahuel/.config/kitty/kitty.conf"
+alias zshrc="nvim /home/nahuel/.zshrc"
 alias ls="exa --icons --sort extension"
 alias lst="exa --icons --tree --sort extension"
-alias awconf="vim /home/nahuel/.config/awesome/rc.lua"
-alias v="vim"
+alias awconf="nvim /home/nahuel/.config/awesome/rc.lua"
+alias v="nvim"
 alias pac="sudo pacman"
 alias loadzsh="source /home/nahuel/.zshrc"
-alias pconf="vim /home/nahuel/.config/polybar/config.ini"
-alias attyconf="vim /home/nahuel/.config/alacritty/alacritty.yml"
-alias vrc="vim /home/nahuel/.vimrc" 
+alias pconf="nvim /home/nahuel/.config/polybar/config.ini"
+alias attyconf="nvim /home/nahuel/.config/alacritty/alacritty.yml"
+alias vrc="nvim /home/nahuel/.vimrc" 
 # spaceship init
 source "$HOME/.zsh/spaceship/spaceship.zsh"
 export BFETCH_CLASSIC_MODE="true"

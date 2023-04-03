@@ -1,9 +1,9 @@
 local builtin = require('telescope.builtin')
 
 -- ========== Fuzzy Finder ==========
---
 -- search files in local directory
-vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+vim.keymap.set('n', '<leader>n', builtin.find_files, {})
+--
 
 -- 
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
