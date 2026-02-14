@@ -1,0 +1,19 @@
+[font]
+size = 14.0
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Medium"
+
+[window]
+opacity = 1.0
+padding = { x = 6, y = 6 }
+
+[colors.primary]
+background = "#181818"
+foreground = "#d8d8d8"
+
+[keyboard]
+bindings = [
+  { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
+]
