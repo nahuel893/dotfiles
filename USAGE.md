@@ -52,6 +52,27 @@ Si ya existe un archivo en `~/.config/`, lo renombra a `.bak` antes de reemplaza
    ```
 3. Todas las configs vuelven al lugar correcto.
 
+## Sincronizar entre múltiples PCs
+
+**En el otro PC (primera vez):**
+```bash
+git clone https://github.com/nahuel893/dotfiles ~/dotfiles
+bash ~/dotfiles/install.sh
+```
+
+**Regla importante:** siempre `git pull` antes de editar, siempre `git push` después de commitear.
+
+```bash
+cd ~/dotfiles
+git pull                          # traer cambios del otro PC
+# ... editás tus configs ...
+git add -A
+git commit -m "lo que cambiaste"
+git push                          # subir cambios
+```
+
+Como las configs son symlinks, al hacer `git pull` se actualizan automáticamente.
+
 ## Agregar un nuevo dotfile
 
 1. Copiar el archivo al repo manteniendo la estructura:
