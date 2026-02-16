@@ -1,0 +1,120 @@
+* {
+    font-family: "JetBrains Mono Nerd Font", "Font Awesome 6 Free", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #d8d8d8;
+}
+
+/* ── Módulos generales ── */
+
+#workspaces,
+#clock,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#network,
+#tray {
+    padding: 4px 12px;
+    margin: 2px 3px;
+    border-radius: 8px;
+    background: rgba(24, 24, 24, 0.75);
+}
+
+/* ── Workspaces ── */
+
+#workspaces button {
+    padding: 0 6px;
+    color: #585858;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    color: #c4a7e7;
+    background: rgba(196, 167, 231, 0.15);
+}
+
+#workspaces button:hover {
+    color: #d8d8d8;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#workspaces button.urgent {
+    color: #eb6f92;
+    background: rgba(235, 111, 146, 0.15);
+}
+
+/* ── Reloj ── */
+
+#clock {
+    color: #e0def4;
+    font-weight: bold;
+}
+
+/* ── Sistema ── */
+
+#cpu {
+    color: #9ccfd8;
+}
+
+#memory {
+    color: #c4a7e7;
+}
+
+#temperature {
+    color: #f6c177;
+}
+
+#temperature.critical {
+    color: #eb6f92;
+}
+
+/* ── Audio ── */
+
+#pulseaudio {
+    color: #ebbcba;
+}
+
+#pulseaudio.muted {
+    color: #585858;
+}
+
+/* ── Red ── */
+
+#network {
+    color: #9ccfd8;
+}
+
+#network.disconnected {
+    color: #eb6f92;
+}
+
+/* ── Tray ── */
+
+#tray {
+    padding: 4px 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* ── Tooltips ── */
+
+tooltip {
+    background: rgba(24, 24, 24, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #d8d8d8;
+}

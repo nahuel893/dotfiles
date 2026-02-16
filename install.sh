@@ -20,4 +20,6 @@ link .config/alacritty/alacritty.toml
 link .config/hypr/hyprland.conf
 link .config/hypr/hyprpaper.conf
 link .config/starship.toml
+link .config/waybar/config.jsonc
+link .config/waybar/style.css
 link .zshrc
