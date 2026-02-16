@@ -121,6 +121,8 @@ sudo pacman -S --needed --noconfirm \
     playerctl \
     polkit-gnome \
     tailscale \
+    iputils \
+    net-tools \
     unzip \
     p7zip
 
