@@ -6,7 +6,6 @@
     "margin-top": 6,
     "margin-left": 10,
     "margin-right": 10,
-
     "modules-left": [
         "hyprland/workspaces"
     ],
@@ -21,68 +20,67 @@
         "pulseaudio",
         "network"
     ],
-
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "1": "一",
-            "2": "二",
-            "3": "三",
-            "4": "四",
-            "5": "五",
-            "6": "六",
-            "7": "七",
-            "8": "八",
-            "9": "九",
-            "10": "十",
-            "active": "",
-            "default": ""
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "10": "",
+            "default": ""
         },
         "on-click": "activate",
         "sort-by-number": true
     },
-
     "clock": {
-        "format": "  {:%H:%M}",
-        "format-alt": "  {:%A %d %B %Y}",
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%A %d %B %Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
-
     "cpu": {
-        "format": "  {usage}%",
+        "format": "  {usage}%",
         "interval": 2,
         "tooltip": true
     },
-
     "memory": {
-        "format": "  {percentage}%",
+        "format": "  {percentage}%",
         "tooltip-format": "{used:0.1f}GB / {total:0.1f}GB"
     },
-
     "temperature": {
         "critical-threshold": 80,
         "format": "{icon} {temperatureC}°C",
         "format-critical": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", ""]
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
     },
-
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": "  muted",
+        "format-muted": "  muted",
         "format-icons": {
-            "headphone": " ",
-            "default": ["", " ", " "]
+            "headphone": " ",
+            "default": [
+                "",
+                " ",
+                " "
+            ]
         },
         "on-click": "pavucontrol",
         "scroll-step": 5
     },
-
     "network": {
-        "format-ethernet": "  {ipaddr}",
-        "format-disconnected": "  offline",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n  {bandwidthUpBits}\n  {bandwidthDownBits}"
+        "format-ethernet": "  {ipaddr}",
+        "format-disconnected": "  offline",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n  {bandwidthUpBits}\n  {bandwidthDownBits}"
     },
-
     "tray": {
         "icon-size": 16,
         "spacing": 8

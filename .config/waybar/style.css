@@ -1,6 +1,6 @@
 * {
     font-family: "JetBrains Mono Nerd Font", "Font Awesome 6 Free", sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     min-height: 0;
 }
 
@@ -37,8 +37,8 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #c4a7e7;
-    background: rgba(196, 167, 231, 0.15);
+    color: #1a1a2e;
+    background: #c4a7e7;
 }
 
 #workspaces button:hover {

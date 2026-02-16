@@ -2,7 +2,7 @@
 program = "/usr/bin/zsh"
 
 [font]
-size = 14.0
+size = 10.0
 #test
 [font.normal]
 family = "JetBrains Mono"
