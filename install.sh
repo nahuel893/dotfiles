@@ -18,5 +18,6 @@ link() {
 
 link .config/alacritty/alacritty.toml
 link .config/hypr/hyprland.conf
+link .config/hypr/hyprpaper.conf
 link .config/starship.toml
 link .zshrc
