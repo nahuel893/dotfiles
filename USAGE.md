@@ -6,24 +6,42 @@
 ~/dotfiles/
 ├── .config/
 │   ├── alacritty/alacritty.toml
-│   └── hypr/hyprland.conf
-├── .gitignore
+│   ├── hypr/hyprland.conf
+│   └── starship.toml
+├── .zshrc
+├── arch-post-install.sh
 ├── install.sh
-└── USAGE.md
+├── USAGE.md
+└── .gitignore
 ```
 
 ## ¿Cómo funciona?
 
-`install.sh` crea **symlinks** (enlaces simbólicos) desde `~/.config/` hacia `~/dotfiles/.config/`.
+`install.sh` crea **symlinks** (enlaces simbólicos) desde tu home hacia `~/dotfiles/`.
 
 ```
 ~/.config/alacritty/alacritty.toml  →  ~/dotfiles/.config/alacritty/alacritty.toml
 ~/.config/hypr/hyprland.conf        →  ~/dotfiles/.config/hypr/hyprland.conf
+~/.config/starship.toml             →  ~/dotfiles/.config/starship.toml
+~/.zshrc                            →  ~/dotfiles/.zshrc
 ```
 
-Hyprland y Alacritty leen desde `~/.config/` como siempre, pero el archivo real vive en `~/dotfiles/`. Así cuando editás tu config, el cambio ya está dentro del repo git listo para commitear.
+Hyprland, Alacritty, Starship y Zsh leen desde sus rutas habituales, pero el archivo real vive en `~/dotfiles/`. Así cuando editás tu config, el cambio ya está dentro del repo git listo para commitear.
 
-Si ya existe un archivo en `~/.config/`, lo renombra a `.bak` antes de reemplazarlo para no perder nada.
+Si ya existe un archivo en el destino, lo renombra a `.bak` antes de reemplazarlo para no perder nada.
+
+## Shell: Zsh + Oh-My-Zsh + Starship
+
+El setup de shell tiene tres partes:
+
+- **Zsh** — el shell (reemplazo de bash)
+- **Oh-My-Zsh** — framework con plugins:
+  - `git` — aliases útiles (`gst`, `gco`, `gp`, etc.)
+  - `zsh-autosuggestions` — sugiere comandos mientras escribís
+  - `zsh-syntax-highlighting` — colorea comandos válidos/inválidos
+- **Starship** — prompt rápido y minimalista (reemplaza el tema de Oh-My-Zsh)
+
+La instalación de Oh-My-Zsh y plugins se hace desde `arch-post-install.sh`. Las configs (`.zshrc` y `starship.toml`) se restauran con `install.sh`.
 
 ## Flujo día a día
 
@@ -46,11 +64,15 @@ Si ya existe un archivo en `~/.config/`, lo renombra a `.bak` antes de reemplaza
    ```bash
    git clone https://github.com/nahuel893/dotfiles ~/dotfiles
    ```
-2. Correr el instalador:
+2. Correr el post-install (instala paquetes, Oh-My-Zsh, plugins, yay):
+   ```bash
+   bash ~/dotfiles/arch-post-install.sh
+   ```
+3. Correr el instalador de symlinks:
    ```bash
    bash ~/dotfiles/install.sh
    ```
-3. Todas las configs vuelven al lugar correcto.
+4. Todas las configs vuelven al lugar correcto.
 
 ## Sincronizar entre múltiples PCs
 

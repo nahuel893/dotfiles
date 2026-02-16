@@ -123,31 +123,32 @@ sudo pacman -S --needed --noconfirm \
     p7zip
 
 # ─────────────────────────────────────────────
-# 10. Configs iniciales
+# 10. Shell (Zsh + Oh-My-Zsh + Starship)
 # ─────────────────────────────────────────────
-log "Configurando Alacritty..."
-mkdir -p ~/.config/alacritty
-cat > ~/.config/alacritty/alacritty.toml << 'ALACRITTY'
-[font]
-size = 14.0
+log "Instalando Zsh y Starship..."
+sudo pacman -S --needed --noconfirm zsh starship
 
-[font.normal]
-family = "JetBrains Mono"
-style = "Medium"
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    log "Instalando Oh-My-Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+else
+    warn "Oh-My-Zsh ya está instalado, salteando."
+fi
 
-[window]
-opacity = 1.0
-padding = { x = 6, y = 6 }
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-[colors.primary]
-background = "#181818"
-foreground = "#d8d8d8"
+if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
+    log "Instalando zsh-autosuggestions..."
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+fi
 
-[keyboard]
-bindings = [
-  { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
-]
-ALACRITTY
+if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+    log "Instalando zsh-syntax-highlighting..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+fi
+
+log "Cambiando shell por defecto a zsh..."
+chsh -s /usr/bin/zsh
 
 # ─────────────────────────────────────────────
 # 11. Instalar yay (AUR helper)
@@ -182,6 +183,7 @@ echo "    grim, slurp           (screenshots en Wayland)"
 echo "    brightnessctl         (control de brillo)"
 echo "    playerctl             (control de media)"
 echo "    polkit-gnome          (autenticación gráfica)"
+echo "    zsh, oh-my-zsh, starship  (shell + prompt)"
 echo "    yay                   (AUR helper)"
 echo ""
 warn "Reiniciá para que SDDM y todo quede activo."
