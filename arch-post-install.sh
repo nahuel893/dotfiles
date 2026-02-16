@@ -171,6 +171,31 @@ else
 fi
 
 # ─────────────────────────────────────────────
+# 12. AstroNvim
+# ─────────────────────────────────────────────
+log "Instalando dependencias de AstroNvim..."
+sudo pacman -S --needed --noconfirm \
+    ripgrep \
+    lazygit \
+    bottom \
+    nodejs \
+    npm \
+    python \
+    tree-sitter-cli
+
+if [[ ! -d "$HOME/.config/nvim/lua" ]]; then
+    log "Instalando AstroNvim..."
+    mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak 2>/dev/null || true
+    mv ~/.local/state/nvim ~/.local/state/nvim.bak 2>/dev/null || true
+    mv ~/.cache/nvim ~/.cache/nvim.bak 2>/dev/null || true
+    git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
+else
+    warn "AstroNvim ya está instalado, salteando."
+fi
+
+# ─────────────────────────────────────────────
 # Resumen
 # ─────────────────────────────────────────────
 echo ""
@@ -191,6 +216,7 @@ echo "    brightnessctl         (control de brillo)"
 echo "    playerctl             (control de media)"
 echo "    polkit-gnome          (autenticación gráfica)"
 echo "    zsh, oh-my-zsh, starship  (shell + prompt)"
+echo "    astronvim              (IDE neovim)"
 echo "    yay                   (AUR helper)"
 echo ""
 warn "Reiniciá para que SDDM y todo quede activo."
