@@ -120,8 +120,11 @@ sudo pacman -S --needed --noconfirm \
     brightnessctl \
     playerctl \
     polkit-gnome \
+    tailscale \
     unzip \
     p7zip
+
+sudo systemctl enable --now tailscaled
 
 # ─────────────────────────────────────────────
 # 10. Shell (Zsh + Oh-My-Zsh + Starship)
