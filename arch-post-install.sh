@@ -109,6 +109,7 @@ sudo pacman -S --needed --noconfirm \
     firefox \
     ranger \
     thunar \
+    btop \
     grim \
     slurp
 
