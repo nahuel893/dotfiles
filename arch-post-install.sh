@@ -39,6 +39,7 @@ sudo pacman -S --needed --noconfirm \
     wget \
     nano \
     vim \
+    neovim \
     fastfetch
 
 # ─────────────────────────────────────────────
