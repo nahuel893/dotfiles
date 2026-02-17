@@ -2,14 +2,14 @@
 program = "/usr/bin/zsh"
 
 [font]
-size = 10.0
+size = 11.3
 #test
 [font.normal]
 family = "JetBrains Mono"
-style = "Medium"
+style = "Bold"
 
 [window]
-opacity = 1.0
+opacity = 0.80
 padding = { x = 6, y = 6 }
 
 [colors.primary]
