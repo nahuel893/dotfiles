@@ -28,8 +28,10 @@ window#waybar {
 /* ── Workspaces ── */
 
 #workspaces button {
-    padding: 4px 8px;
-    min-width: 28px;
+    padding: 4px;
+    margin: 0 1px;
+    min-width: 24px;
+    min-height: 24px;
     color: #585858;
     background: transparent;
     border: none;
@@ -38,7 +40,9 @@ window#waybar {
 }
 
 #workspaces button label {
-    font-size: 14px;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
 }
 
 #workspaces button.active {
