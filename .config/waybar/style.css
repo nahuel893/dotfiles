@@ -22,13 +22,14 @@ window#waybar {
     padding: 4px 12px;
     margin: 2px 3px;
     border-radius: 8px;
-    background: rgba(24, 24, 24, 0.75);
+    background: rgba(60, 60, 70, 0.65);
 }
 
 /* ── Workspaces ── */
 
 #workspaces button {
-    padding: 0 6px;
+    padding: 4px 8px;
+    min-width: 28px;
     color: #585858;
     background: transparent;
     border: none;
@@ -36,8 +37,12 @@ window#waybar {
     transition: all 0.2s ease;
 }
 
+#workspaces button label {
+    font-size: 14px;
+}
+
 #workspaces button.active {
-    color: #1a1a2e;
+    color: #ffffff;
     background: #c4a7e7;
 }
 
