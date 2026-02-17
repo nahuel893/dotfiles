@@ -1,0 +1,90 @@
+configuration {
+    modi: "drun,run";
+    show-icons: true;
+    font: "JetBrains Mono Nerd Font 13";
+    display-drun: " ";
+    display-run: " ";
+    drun-display-format: "{name}";
+}
+
+* {
+    bg:         #181818cc;
+    bg-alt:     #1a1a2ecc;
+    fg:         #d8d8d8;
+    fg-alt:     #585858;
+    accent:     #c4a7e7;
+    urgent:     #eb6f92;
+    border:     #c4a7e740;
+    transparent: transparent;
+}
+
+window {
+    width: 500px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @border;
+    border-radius: 12px;
+    padding: 0;
+}
+
+mainbox {
+    background-color: @transparent;
+    spacing: 0;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 12px 12px 0 0;
+    padding: 14px 16px;
+    spacing: 10px;
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: @transparent;
+    text-color: @accent;
+    font: "JetBrains Mono Nerd Font 16";
+}
+
+entry {
+    background-color: @transparent;
+    text-color: @fg;
+    placeholder: "Buscar...";
+    placeholder-color: @fg-alt;
+}
+
+listview {
+    background-color: @transparent;
+    columns: 1;
+    lines: 7;
+    padding: 8px 0;
+    fixed-height: true;
+    spacing: 0;
+}
+
+element {
+    background-color: @transparent;
+    padding: 10px 16px;
+    spacing: 10px;
+}
+
+element selected {
+    background-color: @bg-alt;
+    text-color: @accent;
+}
+
+element-icon {
+    background-color: @transparent;
+    size: 22px;
+}
+
+element-text {
+    background-color: @transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+element-text selected {
+    text-color: @accent;
+}

@@ -21,6 +21,7 @@ link .config/hypr/hyprland.conf
 link .config/hypr/hyprpaper.conf
 link .config/starship.toml
 link .config/fontconfig/fonts.conf
+link .config/rofi/config.rasi
 link .config/waybar/config.jsonc
 link .config/waybar/style.css
 link .zshrc
