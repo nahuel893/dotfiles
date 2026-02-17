@@ -17,9 +17,10 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.local/bin:$PATH"
 
 # Aliases
-alias ls="ls --color=auto"
-alias ll="ls -la"
-alias la="ls -a"
+alias ls="exa --icons"
+alias ll="exa --icons -la"
+alias la="exa --icons -a"
+alias lt="exa --icons --tree --level=2"
 alias ..="cd .."
 alias ...="cd ../.."
 
