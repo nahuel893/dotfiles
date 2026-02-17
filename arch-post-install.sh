@@ -95,6 +95,7 @@ sudo systemctl enable sddm
 log "Instalando terminal y fuentes..."
 sudo pacman -S --needed --noconfirm \
     alacritty \
+    kitty \
     ttf-jetbrains-mono \
     ttf-jetbrains-mono-nerd \
     otf-font-awesome \
