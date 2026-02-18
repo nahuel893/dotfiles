@@ -10,11 +10,24 @@ Hardware: Desktop con monitor LG 24GL600F (1920x1080@60Hz) via HDMI.
 ```
 ~/dotfiles/
 ├── .config/
-│   ├── alacritty/alacritty.toml    # Terminal
+│   ├── alacritty/alacritty.toml    # Terminal (fallback)
 │   ├── fontconfig/fonts.conf        # Renderizado de fuentes
 │   ├── hypr/
 │   │   ├── hyprland.conf            # Window manager
 │   │   └── hyprpaper.conf           # Wallpaper (autogenerado)
+│   ├── kitty/kitty.conf             # Terminal (principal)
+│   ├── nvim/lua/                    # AstroNvim configs
+│   │   ├── community.lua            # Plugins de la comunidad
+│   │   ├── lazy_setup.lua           # Bootstrap de Lazy.nvim
+│   │   ├── polish.lua               # Config final (transparencia)
+│   │   └── plugins/                 # Configs de plugins
+│   │       ├── astrocore.lua        # Core de AstroNvim
+│   │       ├── astrolsp.lua         # LSP config
+│   │       ├── astroui.lua          # UI config
+│   │       ├── mason.lua            # Gestor de LSPs/formatters
+│   │       ├── none-ls.lua          # Formateo/linting externo
+│   │       ├── treesitter.lua       # Syntax highlighting
+│   │       └── user.lua             # Plugins custom del usuario
 │   ├── rofi/config.rasi             # Launcher de apps
 │   ├── starship.toml                # Prompt del shell
 │   └── waybar/
@@ -36,42 +49,56 @@ Hardware: Desktop con monitor LG 24GL600F (1920x1080@60Hz) via HDMI.
 
 ## Paleta de colores: Rosé Pine
 
-Paleta unificada en alacritty, waybar y rofi.
+Paleta unificada en kitty, alacritty, waybar, rofi y neovim.
 
 | Nombre | Hex | Uso |
 |--------|-----|-----|
 | Base | `#181818` | Fondo principal |
-| Surface | `#1a1a2e` | Fondo elevado (inputbar rofi, selección waybar) |
+| Surface | `#1a1a2e` | Fondo elevado (inputbar rofi, selección waybar, tabs kitty) |
 | Text | `#d8d8d8` | Texto principal |
 | Subtle | `#585858` | Texto secundario, elementos inactivos |
 | Muted text | `#e0def4` | Texto destacado (reloj) |
-| Violeta | `#c4a7e7` | Acento principal: cursor, selección, workspace activo, RAM |
+| Violeta | `#c4a7e7` | Acento principal: cursor, selección, workspace activo, RAM, tabs activos |
 | Cyan | `#9ccfd8` | CPU, red |
 | Dorado | `#f6c177` | Temperatura |
 | Rosa | `#ebbcba` | Audio |
 | Rojo | `#eb6f92` | Errores, urgente, desconectado |
 | Azul | `#31748f` | Color blue del terminal |
+| Blanco puro | `#ffffff` | Texto workspace activo (máximo contraste) |
 | Píldoras waybar | `rgba(60, 60, 70, 0.65)` | Fondo semitransparente de módulos |
 
 ---
 
 ## Archivos de configuración
 
-### `.config/alacritty/alacritty.toml` — Terminal
+### `.config/kitty/kitty.conf` — Terminal (principal)
 
-**Alacritty** es un emulador de terminal GPU-accelerated para Wayland.
+**Kitty** es un emulador de terminal GPU-accelerated con soporte nativo de imágenes. Reemplaza a Alacritty como terminal principal.
 
 | Sección | Qué hace |
 |---------|----------|
-| `[terminal.shell]` | Fuerza zsh como shell. Necesario porque alacritty no siempre respeta el shell default del usuario |
-| `[font]` | JetBrains Mono Bold a 11.3pt. Bold mejora legibilidad en tamaños chicos |
-| `[window]` | `opacity = 0.70` habilita transparencia. El blur lo aplica Hyprland, no alacritty |
-| `[colors.primary]` | Fondo `#181818` y texto `#d8d8d8` (base Rosé Pine) |
-| `[colors.cursor]` | Cursor violeta (`#c4a7e7`) sobre fondo oscuro para máximo contraste |
-| `[colors.selection]` | Selección violeta para consistencia visual con el cursor |
-| `[colors.normal]` | Los 8 colores base del terminal (black, red, green, yellow, blue, magenta, cyan, white) mapeados a la paleta Rosé Pine |
-| `[colors.bright]` | Variantes bright de los mismos colores. `bright.black` es el gris (`#585858`), `bright.white` es el blanco más claro (`#e0def4`) |
-| `[keyboard]` | `Ctrl+Shift+Enter` abre una nueva instancia de alacritty |
+| `shell` | Fuerza `/usr/bin/zsh` como shell |
+| Font | Iosevka Nerd Font a 12pt. Fuente condensada que permite más código por línea |
+| `background_opacity` | `0.70` habilita transparencia. El blur lo aplica Hyprland |
+| Cursor | Violeta beam (`#c4a7e7`) sobre fondo oscuro |
+| Colores | Paleta completa de 16 colores Rosé Pine (color0-color15) |
+| Tab bar | Estilo powerline. Tab activo: violeta. Inactivo: surface oscuro |
+| Keybinds | `Ctrl+Shift+Enter` nueva ventana, `Ctrl+Shift+T` nueva tab, `Ctrl+Shift+W` cerrar tab |
+| `allow_remote_control` | Permite que herramientas como fastfetch y ranger muestren imágenes en la terminal |
+
+**¿Por qué kitty y no alacritty?** Kitty soporta el protocolo de imágenes nativo, permitiendo mostrar imágenes reales (pixel-perfect) dentro de la terminal. Alacritty no soporta ningún protocolo de imagen. La config de alacritty se mantiene como fallback.
+
+### `.config/alacritty/alacritty.toml` — Terminal (fallback)
+
+**Alacritty** se mantiene como terminal alternativo con la misma paleta Rosé Pine y configuración equivalente.
+
+| Sección | Qué hace |
+|---------|----------|
+| `[terminal.shell]` | Fuerza zsh como shell |
+| `[font]` | JetBrains Mono Bold a 11.3pt |
+| `[window]` | `opacity = 0.70` habilita transparencia |
+| `[colors.*]` | Paleta completa de 16 colores + cursor + selección Rosé Pine |
+| `[keyboard]` | `Ctrl+Shift+Enter` abre una nueva instancia |
 
 ### `.config/hypr/hyprland.conf` — Window Manager
 
@@ -80,19 +107,53 @@ Paleta unificada en alacritty, waybar y rofi.
 | Sección | Qué hace |
 |---------|----------|
 | **Monitors** | `monitor=,preferred,auto,auto` detecta el monitor automáticamente (LG 24GL600F 1080p) |
-| **Programs** | `$terminal = alacritty`, `$menu = rofi -show drun -show-icons -theme ...` Define las apps principales |
+| **Programs** | `$terminal = kitty`, `$menu = rofi -show drun -show-icons -theme ...` Define las apps principales |
 | **Autostart** | Lanza `random-wallpaper.sh` (wallpaper + hyprpaper), `swaync` (notificaciones) y `waybar` al iniciar sesión |
 | **General** | `gaps_in = 5`, `gaps_out = 20` separa las ventanas entre sí y del borde. `layout = dwindle` usa tiling dinámico |
 | **Decoration** | `rounding = 10` redondea esquinas de ventanas. `blur: size=8, passes=3` crea blur difuminado detrás de ventanas transparentes |
 | **Animations** | Curvas bezier personalizadas para transiciones suaves de ventanas, fade y workspaces |
 | **Input** | Layout US, `follow_mouse = 1` (focus sigue al mouse) |
-| **Keybinds** | `Super+Q` terminal, `Super+C` cerrar, `Super+R` rofi, `Super+1-0` workspaces, `Super+Shift+1-0` mover ventana a workspace |
+| **Keybinds** | Ver tabla abajo |
+| **Screenshots** | `grim` para pantalla completa, `grim + slurp` para selección de región |
+
+#### Keybinds de Hyprland
+
+| Tecla | Acción |
+|-------|--------|
+| `Super + Q` | Abrir terminal (kitty) |
+| `Super + C` | Cerrar ventana |
+| `Super + R` | Abrir rofi (launcher) |
+| `Super + E` | File manager |
+| `Super + V` | Toggle floating |
+| `Super + 1-0` | Cambiar a workspace 1-10 |
+| `Super + Shift + 1-0` | Mover ventana a workspace 1-10 |
+| `Super + flechas` | Mover foco entre ventanas |
+| `Print` | Screenshot pantalla completa → `~/Pictures/` |
+| `Super + Print` | Screenshot de región → `~/Pictures/` |
+| `Super + Shift + Print` | Screenshot de región → clipboard |
 
 ### `.config/hypr/hyprpaper.conf` — Wallpaper
 
 **Hyprpaper** es el gestor de wallpapers del ecosistema Hyprland.
 
 Este archivo es **autogenerado** por `scripts/random-wallpaper.sh` en cada inicio de sesión. Contiene la imagen seleccionada aleatoriamente de `~/Pictures/wallpapers/`. No se edita manualmente.
+
+### `.config/nvim/lua/` — AstroNvim
+
+**AstroNvim** es una distribución de Neovim preconfigurada como IDE.
+
+| Archivo | Qué hace |
+|---------|----------|
+| `lazy_setup.lua` | Bootstrap de Lazy.nvim (gestor de plugins). Configura AstroNvim v5, leader key = Space |
+| `community.lua` | Importa plugins de la comunidad AstroNvim (desactivado por defecto) |
+| `polish.lua` | Config final que se ejecuta después de todo. Configura **transparencia** removiendo el fondo de Normal, NormalFloat, SignColumn y NeoTree para que el blur de kitty/Hyprland se vea |
+| `plugins/astrocore.lua` | Configuración core: keymaps, opciones, autocommands |
+| `plugins/astrolsp.lua` | Configuración de LSP: formateo, diagnósticos, keybinds de código |
+| `plugins/astroui.lua` | Tema visual y configuración de iconos |
+| `plugins/mason.lua` | Lista de LSPs, formatters y linters a instalar automáticamente |
+| `plugins/none-ls.lua` | Fuentes externas de formateo/linting (complementa LSP nativo) |
+| `plugins/treesitter.lua` | Parsers de syntax highlighting a instalar automáticamente |
+| `plugins/user.lua` | Plugins adicionales del usuario |
 
 ### `.config/rofi/config.rasi` — Launcher de apps
 
@@ -118,11 +179,9 @@ Este archivo es **autogenerado** por `scripts/random-wallpaper.sh` en cada inici
 | `position` | `top` | Barra arriba de la pantalla |
 | `height` | `34` | Altura compacta |
 | `margin-top/left/right` | `6/10/10` | Separación del borde, crea efecto flotante |
-| **modules-left** | `hyprland/workspaces` | Iconos Nerd Font por workspace (terminal, browser, código, etc.) |
+| **modules-left** | `hyprland/workspaces` | Números 1-10, siempre visibles (persistent workspaces) |
 | **modules-center** | `clock` | Reloj. Click alterna entre hora y fecha completa |
 | **modules-right** | `tray, temperature, cpu, memory, pulseaudio, network` | Monitoreo del sistema. Sin batería ni wifi (es desktop) |
-
-Cada módulo tiene su `format` con iconos Nerd Font unicode.
 
 ### `.config/waybar/style.css` — Barra de estado (estilo)
 
@@ -130,7 +189,7 @@ Cada módulo tiene su `format` con iconos Nerd Font unicode.
 |-------|----------|
 | `window#waybar { background: transparent }` | La barra en sí es invisible |
 | Módulos `{ background: rgba(60,60,70,0.65); border-radius: 8px }` | Cada módulo es una píldora semitransparente flotando |
-| `button.active { color: #1a1a2e; background: #c4a7e7 }` | Workspace activo: fondo violeta sólido + texto oscuro para contraste |
+| `button.active { color: #ffffff; background: #c4a7e7 }` | Workspace activo: fondo violeta sólido + texto blanco puro para máximo contraste |
 | Colores por módulo | CPU cyan, RAM violeta, temp dorado, audio rosa, red cyan — cada uno tiene su tono de la paleta |
 | `tooltip { background: rgba(24,24,24,0.9) }` | Tooltips oscuros con borde sutil |
 
@@ -189,7 +248,7 @@ Se ejecuta al inicio de sesión via `exec-once` en `hyprland.conf`.
 Crea enlaces simbólicos desde el home hacia el repo de dotfiles.
 
 Función `link()`:
-- Recibe una ruta relativa (ej. `.config/alacritty/alacritty.toml`)
+- Recibe una ruta relativa (ej. `.config/kitty/kitty.conf`)
 - Crea los directorios necesarios con `mkdir -p`
 - Si ya existe un archivo real (no symlink), lo renombra a `.bak`
 - Crea el symlink con `ln -sf`
@@ -205,9 +264,9 @@ Script idempotente (se puede correr múltiples veces gracias a `--needed`).
 | 1. Sistema | base-devel, linux-headers, git, curl, wget, nano, vim, neovim, fastfetch | Herramientas esenciales de desarrollo y sistema |
 | 2. Boot & Red | grub, efibootmgr, dosfstools, mtools, os-prober, networkmanager | Bootloader UEFI + gestión de red. Habilita NetworkManager |
 | 3. Hyprland | hyprland, hyprpaper, hyprpolkitagent, xdg-desktop-portal-hyprland, waybar, rofi-wayland, dunst, wl-clipboard | Compositor + barra + launcher + notificaciones + clipboard para Wayland |
-| 4. Audio | pipewire, pipewire-pulse, pipewire-alsa, wireplumber | PipeWire reemplaza PulseAudio/ALSA. wireplumber es el session manager. Sin pipewire-pulse las apps que usan PulseAudio no tendrían audio |
+| 4. Audio | pipewire, pipewire-pulse, pipewire-alsa, wireplumber | PipeWire reemplaza PulseAudio/ALSA. wireplumber es el session manager. pipewire-pulse es la capa de compatibilidad para apps que usan PulseAudio |
 | 5. Display Manager | sddm | Pantalla de login gráfica. Se habilita como servicio systemd |
-| 6. Terminal + Fuentes | alacritty, ttf-jetbrains-mono, ttf-jetbrains-mono-nerd, otf-font-awesome, noto-fonts, noto-fonts-emoji | Terminal GPU + fuente monospace + variante Nerd Fonts (iconos) + Font Awesome (waybar) + Noto (unicode/emoji) |
+| 6. Terminal + Fuentes | alacritty, kitty, ttf-jetbrains-mono, ttf-jetbrains-mono-nerd, otf-font-awesome, noto-fonts, noto-fonts-emoji | Terminales GPU (kitty principal, alacritty fallback) + fuentes monospace + Nerd Fonts (iconos) + Font Awesome (waybar) + Noto (unicode/emoji) |
 | 7. Apps | firefox, ranger, thunar, btop, grim, slurp | Browser + file managers (CLI y GUI) + monitor de sistema + screenshots Wayland |
 | 8. Utilidades | brightnessctl, playerctl, polkit-gnome, tailscale, iputils, net-tools, unzip, p7zip | Control de brillo/media + auth gráfica + VPN + herramientas de red + compresión |
 | 9. Shell | zsh, starship, oh-my-zsh + plugins | Shell moderno + prompt rápido + framework con autosuggestions y syntax highlighting |
