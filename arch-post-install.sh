@@ -63,6 +63,7 @@ log "Instalando Hyprland y ecosistema Wayland..."
 sudo pacman -S --needed --noconfirm \
     hyprland \
     hyprpaper \
+    hyprlock \
     hyprpolkitagent \
     xdg-desktop-portal-hyprland \
     waybar \

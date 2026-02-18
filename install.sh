@@ -19,6 +19,7 @@ link() {
 link .config/alacritty/alacritty.toml
 link .config/kitty/kitty.conf
 link .config/hypr/hyprland.conf
+link .config/hypr/hyprlock.conf
 link .config/starship.toml
 link .config/fontconfig/fonts.conf
 link .config/nvim/lua/community.lua
