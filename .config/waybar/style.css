@@ -1,3 +1,5 @@
+@import "colors.css";
+
 * {
     font-family: "JetBrains Mono Nerd Font", "Font Awesome 6 Free", sans-serif;
     font-size: 14px;
@@ -6,7 +8,7 @@
 
 window#waybar {
     background: transparent;
-    color: #d8d8d8;
+    color: @on_surface;
 }
 
 /* ── Módulos generales ── */
@@ -22,7 +24,7 @@ window#waybar {
     padding: 4px 12px;
     margin: 2px 3px;
     border-radius: 8px;
-    background: rgba(60, 60, 70, 0.65);
+    background: alpha(@surface_container, 0.65);
 }
 
 /* ── Workspaces ── */
@@ -32,7 +34,7 @@ window#waybar {
     margin: 0 1px;
     min-width: 24px;
     min-height: 24px;
-    color: #585858;
+    color: @outline;
     background: transparent;
     border: none;
     border-radius: 6px;
@@ -46,63 +48,63 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #ffffff;
-    background: #c4a7e7;
+    color: @on_primary;
+    background: @primary;
 }
 
 #workspaces button:hover {
-    color: #d8d8d8;
-    background: rgba(255, 255, 255, 0.08);
+    color: @on_surface;
+    background: alpha(@surface_bright, 0.3);
 }
 
 #workspaces button.urgent {
-    color: #eb6f92;
-    background: rgba(235, 111, 146, 0.15);
+    color: @error;
+    background: alpha(@error, 0.15);
 }
 
 /* ── Reloj ── */
 
 #clock {
-    color: #e0def4;
+    color: @on_surface;
     font-weight: bold;
 }
 
 /* ── Sistema ── */
 
 #cpu {
-    color: #9ccfd8;
+    color: @secondary;
 }
 
 #memory {
-    color: #c4a7e7;
+    color: @primary;
 }
 
 #temperature {
-    color: #f6c177;
+    color: @tertiary;
 }
 
 #temperature.critical {
-    color: #eb6f92;
+    color: @error;
 }
 
 /* ── Audio ── */
 
 #pulseaudio {
-    color: #ebbcba;
+    color: @tertiary;
 }
 
 #pulseaudio.muted {
-    color: #585858;
+    color: @outline;
 }
 
 /* ── Red ── */
 
 #network {
-    color: #9ccfd8;
+    color: @secondary;
 }
 
 #network.disconnected {
-    color: #eb6f92;
+    color: @error;
 }
 
 /* ── Tray ── */
@@ -122,8 +124,8 @@ window#waybar {
 /* ── Tooltips ── */
 
 tooltip {
-    background: rgba(24, 24, 24, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: alpha(@surface, 0.9);
+    border: 1px solid alpha(@outline_variant, 0.2);
     border-radius: 8px;
-    color: #d8d8d8;
+    color: @on_surface;
 }

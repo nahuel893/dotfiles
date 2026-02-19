@@ -69,7 +69,8 @@ sudo pacman -S --needed --noconfirm \
     waybar \
     rofi-wayland \
     dunst \
-    wl-clipboard
+    wl-clipboard \
+    matugen
 
 # ─────────────────────────────────────────────
 # 5. Audio (PipeWire)

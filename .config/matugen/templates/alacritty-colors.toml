@@ -1,0 +1,31 @@
+[colors.primary]
+background = "{{ colors.surface_container_lowest.dark.hex }}"
+foreground = "{{ colors.on_surface.dark.hex }}"
+
+[colors.cursor]
+cursor = "{{ colors.primary.dark.hex }}"
+text = "{{ colors.on_primary.dark.hex }}"
+
+[colors.selection]
+background = "{{ colors.secondary.dark.hex }}"
+text = "{{ colors.on_secondary.dark.hex }}"
+
+[colors.normal]
+black   = "{{ colors.surface.dark.hex }}"
+red     = "{{ colors.error.dark.hex }}"
+green   = "{{ colors.secondary_fixed_dim.dark.hex }}"
+yellow  = "{{ colors.tertiary_fixed_dim.dark.hex }}"
+blue    = "{{ colors.on_primary_fixed_variant.dark.hex }}"
+magenta = "{{ colors.on_secondary_fixed_variant.dark.hex }}"
+cyan    = "{{ colors.on_tertiary_fixed_variant.dark.hex }}"
+white   = "{{ colors.on_surface_variant.dark.hex }}"
+
+[colors.bright]
+black   = "{{ colors.surface_container_highest.dark.hex }}"
+red     = "{{ colors.error_container.dark.hex }}"
+green   = "{{ colors.secondary_fixed.dark.hex }}"
+yellow  = "{{ colors.tertiary_fixed.dark.hex }}"
+blue    = "{{ colors.primary.dark.hex }}"
+magenta = "{{ colors.secondary.dark.hex }}"
+cyan    = "{{ colors.tertiary.dark.hex }}"
+white   = "{{ colors.on_surface.dark.hex }}"

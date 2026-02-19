@@ -7,16 +7,7 @@ configuration {
     drun-display-format: "{name}";
 }
 
-* {
-    bg:         #181818cc;
-    bg-alt:     #1a1a2ecc;
-    fg:         #d8d8d8;
-    fg-alt:     #585858;
-    accent:     #c4a7e7;
-    urgent:     #eb6f92;
-    border:     #c4a7e740;
-    transparent: transparent;
-}
+@import "colors.rasi"
 
 window {
     width: 500px;

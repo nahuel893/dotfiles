@@ -35,4 +35,11 @@ link .config/nvim/lua/plugins/user.lua
 link .config/rofi/config.rasi
 link .config/waybar/config.jsonc
 link .config/waybar/style.css
+link .config/matugen/config.toml
+link .config/matugen/templates/kitty-colors.conf
+link .config/matugen/templates/waybar-colors.css
+link .config/matugen/templates/rofi-colors.rasi
+link .config/matugen/templates/hyprland-colors.conf
+link .config/matugen/templates/hyprlock-colors.conf
+link .config/matugen/templates/alacritty-colors.toml
 link .zshrc

@@ -1,0 +1,10 @@
+* {
+    bg:          {{ colors.surface.dark.hex }}cc;
+    bg-alt:      {{ colors.surface_container.dark.hex }}cc;
+    fg:          {{ colors.on_surface.dark.hex }};
+    fg-alt:      {{ colors.on_surface_variant.dark.hex }};
+    accent:      {{ colors.primary.dark.hex }};
+    urgent:      {{ colors.error.dark.hex }};
+    border:      {{ colors.primary.dark.hex }}40;
+    transparent: transparent;
+}

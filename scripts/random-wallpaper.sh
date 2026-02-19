@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Selecciona un wallpaper aleatorio y lanza hyprpaper
+# Selecciona un wallpaper aleatorio, genera colores con matugen, y lanza hyprpaper
 
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
@@ -15,6 +15,9 @@ if [[ -z "$wallpaper" ]]; then
     echo "No se encontraron wallpapers en $WALLPAPER_DIR"
     exit 1
 fi
+
+# Generar paleta Material You desde el wallpaper
+matugen image "$wallpaper" -m dark 2>/dev/null
 
 # Obtener nombre del monitor
 monitor=$(hyprctl monitors -j | grep -o '"name": "[^"]*"' | head -1 | cut -d'"' -f4)

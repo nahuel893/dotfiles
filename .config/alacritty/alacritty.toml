@@ -1,3 +1,6 @@
+[general]
+import = ["~/.config/alacritty/matugen.toml"]
+
 [terminal.shell]
 program = "/usr/bin/zsh"
 
@@ -11,38 +14,6 @@ style = "Bold"
 [window]
 opacity = 0.70
 padding = { x = 6, y = 6 }
-
-[colors.primary]
-background = "#181818"
-foreground = "#d8d8d8"
-
-[colors.cursor]
-cursor = "#c4a7e7"
-text = "#181818"
-
-[colors.selection]
-background = "#c4a7e7"
-text = "#181818"
-
-[colors.normal]
-black   = "#181818"
-red     = "#eb6f92"
-green   = "#9ccfd8"
-yellow  = "#f6c177"
-blue    = "#31748f"
-magenta = "#c4a7e7"
-cyan    = "#ebbcba"
-white   = "#d8d8d8"
-
-[colors.bright]
-black   = "#585858"
-red     = "#eb6f92"
-green   = "#9ccfd8"
-yellow  = "#f6c177"
-blue    = "#31748f"
-magenta = "#c4a7e7"
-cyan    = "#ebbcba"
-white   = "#e0def4"
 
 [keyboard]
 bindings = [
