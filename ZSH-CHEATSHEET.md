@@ -100,3 +100,16 @@ Colorea comandos en tiempo real mientras escribís:
 | **Coloreado** | Pipes `\|`, redirects `>`, `<` |
 
 Ventaja principal: detectás errores **antes** de presionar Enter.
+
+---
+
+## Aliases custom (.zshrc)
+
+| Alias | Comando | Descripción |
+|-------|---------|-------------|
+| `ls` | `exa --icons` | Listado con iconos Nerd Font |
+| `ll` | `exa --icons -la` | Listado largo con archivos ocultos |
+| `la` | `exa --icons -a` | Todos los archivos con iconos |
+| `lt` | `exa --icons --tree --level=2` | Árbol de 2 niveles |
+| `..` | `cd ..` | Subir un directorio |
+| `...` | `cd ../..` | Subir dos directorios |
