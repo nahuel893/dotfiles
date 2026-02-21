@@ -24,5 +24,13 @@ alias lt="exa --icons --tree --level=2"
 alias ..="cd .."
 alias ...="cd ../.."
 
+# Terminal title (muestra carpeta actual y comando en ejecución)
+function precmd() {
+    print -Pn "\e]2;%~\a"
+}
+function preexec() {
+    print -Pn "\e]2;$1\a"
+}
+
 # Starship prompt
 eval "$(starship init zsh)"

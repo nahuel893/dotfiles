@@ -21,4 +21,6 @@ if VBoxManage showvminfo "$VM_NAME" --machinereadable | grep -q 'VMState="runnin
 else
     echo "Iniciando $VM_NAME..."
     VBoxManage startvm "$VM_NAME" --type gui
+    # Esperar a que Guest Additions estén listas y forzar resolución
+    (sleep 15 && VBoxManage controlvm "$VM_NAME" setvideomodehint 1876 942 32) &
 fi
