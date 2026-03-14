@@ -16,6 +16,9 @@ source $ZSH/oh-my-zsh.sh
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Claude Code
+export CLAUDE_AGENT_TEAMS=1
+
 # Aliases
 alias ls="exa --icons"
 alias ll="exa --icons -la"
@@ -23,7 +26,9 @@ alias la="exa --icons -a"
 alias lt="exa --icons --tree --level=2"
 alias ..="cd .."
 alias ...="cd ../.."
-
+alias chss="cd ~/projects/work/chesserp-py-sdk/"
+alias dm="cd ~/projects/work/sales-dashboard/"
+alias etl="~/projects/work/medallion-etl/"
 # Terminal title (muestra carpeta actual y comando en ejecución)
 function precmd() {
     print -Pn "\e]2;%~\a"

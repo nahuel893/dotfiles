@@ -10,9 +10,10 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
-        "clock"
+        "hyprland/window"
     ],
     "modules-right": [
+        "clock",
         "tray",
         "temperature",
         "cpu",
@@ -21,23 +22,29 @@
         "network"
     ],
     "hyprland/workspaces": {
-        "format": "{name}",
+        "format": "{icon}",
+        "format-icons": {
+            "1": " ETL",
+            "2": " API",
+            "3": " DASH",
+            "4": " GEO",
+            "5": " VM",
+            "6": " SSH",
+            "7": "7",
+            "8": "8",
+            "9": " WEB",
+            "10": " SYS"
+        },
         "on-click": "activate",
         "sort-by-number": true,
         "persistent-workspaces": {
-            "*": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-            ]
+            "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
+    },
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 60,
+        "separate-outputs": true
     },
     "clock": {
         "format": "  {:%H:%M}",

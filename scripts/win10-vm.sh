@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Lanza la VM de Windows 10 en VirtualBox
 
-VM_NAME="win10"
+VM_NAME="w10"
 
 # Verificar que el disco con los VHDs esté montado
 if ! mountpoint -q /mnt/vbox; then
