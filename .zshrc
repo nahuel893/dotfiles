@@ -14,7 +14,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # PATH
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
 
 # Claude Code
 export CLAUDE_AGENT_TEAMS=1
@@ -39,3 +39,7 @@ function preexec() {
 
 # Starship prompt
 eval "$(starship init zsh)"
+
+# Override alias gga → Gentleman Guardian Angel
+unalias gga 2>/dev/null
+alias gga="$HOME/.local/bin/gga"
