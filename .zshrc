@@ -19,6 +19,9 @@ export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
 # Claude Code
 export CLAUDE_AGENT_TEAMS=1
 
+# Wallpaper directory
+export WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+
 # Aliases
 alias ls="exa --icons"
 alias ll="exa --icons -la"
@@ -43,3 +46,7 @@ eval "$(starship init zsh)"
 # Override alias gga → Gentleman Guardian Angel
 unalias gga 2>/dev/null
 alias gga="$HOME/.local/bin/gga"
+
+export QT_QPA_PLATFORM=xcb
+export QT_SCALE_FACTOR=1
+export PATH=~/.npm-global/bin:$PATH

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Selecciona un wallpaper aleatorio y lanza hyprpaper
 
-WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
 
 # Matar instancias previas de hyprpaper
