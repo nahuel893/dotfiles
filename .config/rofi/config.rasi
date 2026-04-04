@@ -1,7 +1,7 @@
 configuration {
     modi: "drun,run";
     show-icons: true;
-    font: "JetBrains Mono Nerd Font 13";
+    font: "IosevkaTerm Nerd Font 13";
     display-drun: " ";
     display-run: " ";
     drun-display-format: "{name}";
@@ -35,7 +35,7 @@ inputbar {
 prompt {
     background-color: @transparent;
     text-color: @accent;
-    font: "JetBrains Mono Nerd Font 16";
+    font: "IosevkaTerm Nerd Font 16";
 }
 
 entry {
