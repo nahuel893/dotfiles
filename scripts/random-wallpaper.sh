@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Selecciona un wallpaper aleatorio y lanza hyprpaper
 
+# Source dotfiles env if WALLPAPER_DIR is not set
+[[ -z "$WALLPAPER_DIR" ]] && source "$HOME/dotfiles/.env"
 WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
 

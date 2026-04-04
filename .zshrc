@@ -19,8 +19,8 @@ export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
 # Claude Code
 export CLAUDE_AGENT_TEAMS=1
 
-# Wallpaper directory
-export WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+# Dotfiles environment variables
+source "$HOME/dotfiles/.env"
 
 # Aliases
 alias ls="exa --icons"
