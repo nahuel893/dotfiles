@@ -52,6 +52,12 @@ input "type:touchpad" {
 }
 
 ### Autostart ──────────────────────────────────────────────────────────────
+# Export session env to systemd/dbus FIRST, so xdg-desktop-portal backends
+# (gtk/wlr) can open the Wayland display. Without this the portal hangs and
+# clients like waybar time out after 25s and die.
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
 exec mako
 # exec_always so waybar survives reloads and refreshes on theme switch
 exec_always sh -c 'pkill -x waybar; sleep 0.2; waybar'
