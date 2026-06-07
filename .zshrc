@@ -50,3 +50,5 @@ alias gga="$HOME/.local/bin/gga"
 export QT_QPA_PLATFORM=xcb
 export QT_SCALE_FACTOR=1
 export PATH=~/.npm-global/bin:$PATH
+
+
