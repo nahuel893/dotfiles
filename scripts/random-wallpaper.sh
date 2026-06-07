@@ -1,36 +1,24 @@
 #!/usr/bin/env bash
-# Selecciona un wallpaper aleatorio y lanza hyprpaper
+# Pick a random wallpaper and set it with swaybg on all outputs (Wayland/sway).
+set -euo pipefail
 
 # Source dotfiles env if WALLPAPER_DIR is not set
-[[ -z "$WALLPAPER_DIR" ]] && source "$HOME/dotfiles/.env"
+[ -z "${WALLPAPER_DIR:-}" ] && [ -f "$HOME/dotfiles/.env" ] && source "$HOME/dotfiles/.env"
 WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
-HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
 
-# Matar instancias previas de hyprpaper
-pkill -x hyprpaper 2>/dev/null
-sleep 1
+wall=$(find "$WALLPAPER_DIR" -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+    | shuf -n 1)
 
-# Buscar imágenes
-wallpaper=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | shuf -n 1)
-
-if [[ -z "$wallpaper" ]]; then
-    echo "No se encontraron wallpapers en $WALLPAPER_DIR"
+if [ -z "$wall" ]; then
+    echo "No wallpapers found in $WALLPAPER_DIR" >&2
     exit 1
 fi
 
-# Obtener nombre del monitor
-monitor=$(hyprctl monitors -j | grep -o '"name": "[^"]*"' | head -1 | cut -d'"' -f4)
-monitor=${monitor:-HDMI-A-1}
+# Replace any running swaybg
+pkill -x swaybg 2>/dev/null || true
+sleep 0.3
+swaybg -o '*' -i "$wall" -m fill >/dev/null 2>&1 &
+disown
 
-# Generar hyprpaper.conf (formato 0.8.x con bloques)
-cat > "$HYPRPAPER_CONF" << EOF
-wallpaper {
-    monitor = ${monitor}
-    path = ${wallpaper}
-    fit_mode = cover
-}
-EOF
-
-# Esperar a que el archivo esté listo y lanzar hyprpaper
-sync
-exec hyprpaper
+echo "Wallpaper: $wall"

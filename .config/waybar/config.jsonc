@@ -7,21 +7,22 @@
     "margin-left": 10,
     "margin-right": 10,
     "modules-left": [
-        "hyprland/workspaces"
+        "sway/workspaces",
+        "sway/mode"
     ],
     "modules-center": [
-        "hyprland/window"
+        "sway/window"
     ],
     "modules-right": [
-        "clock",
-        "tray",
-        "temperature",
         "cpu",
         "memory",
+        "temperature",
         "pulseaudio",
-        "network"
+        "network",
+        "clock",
+        "tray"
     ],
-    "hyprland/workspaces": {
+    "sway/workspaces": {
         "format": "{icon}",
         "format-icons": {
             "1": " ETL",
@@ -35,59 +36,56 @@
             "9": " WEB",
             "10": " SYS"
         },
-        "on-click": "activate",
+        "disable-scroll": false,
         "sort-by-number": true,
         "persistent-workspaces": {
             "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
     },
-    "hyprland/window": {
+    "sway/mode": {
+        "format": " {}"
+    },
+    "sway/window": {
         "format": "{}",
-        "max-length": 60,
-        "separate-outputs": true
+        "max-length": 60
     },
     "clock": {
-        "format": "  {:%H:%M}",
-        "format-alt": "  {:%A %d %B %Y}",
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%A %d %B %Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
-        "format": "  {usage}%",
+        "format": "  {usage}%",
         "interval": 2,
         "tooltip": true
     },
     "memory": {
-        "format": "  {percentage}%",
+        "format": "  {percentage}%",
+        "interval": 2,
         "tooltip-format": "{used:0.1f}GB / {total:0.1f}GB"
     },
     "temperature": {
         "critical-threshold": 80,
+        "interval": 2,
         "format": "{icon} {temperatureC}°C",
         "format-critical": "{icon} {temperatureC}°C",
-        "format-icons": [
-            "",
-            "",
-            ""
-        ]
+        "format-icons": ["", "", ""]
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": "  muted",
+        "format-muted": "  muted",
         "format-icons": {
-            "headphone": " ",
-            "default": [
-                "",
-                " ",
-                " "
-            ]
+            "headphone": " ",
+            "default": ["", " ", " "]
         },
         "on-click": "pavucontrol",
         "scroll-step": 5
     },
     "network": {
-        "format-ethernet": "  {ipaddr}",
-        "format-disconnected": "  offline",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n  {bandwidthUpBits}\n  {bandwidthDownBits}"
+        "format-wifi": "  {essid}",
+        "format-ethernet": "  {ipaddr}",
+        "format-disconnected": "  offline",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n  {bandwidthUpBits}\n  {bandwidthDownBits}"
     },
     "tray": {
         "icon-size": 16,

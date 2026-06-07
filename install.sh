@@ -41,4 +41,9 @@ link .config/kitty/matugen.conf
 link .config/alacritty/matugen.toml
 link .config/hypr/colors.conf
 link .config/hypr/hyprlock-colors.conf
+
+# ── sway rice (Debian / Wayland) ──
+link .config/sway/config
+link .config/swaylock/config
+
 link .zshrc

@@ -1,0 +1,22 @@
+# swaylock (plain — no blur, per design choice)
+# Reads ~/.config/swaylock/config automatically.
+ignore-empty-password
+show-failed-attempts
+indicator-radius=100
+indicator-thickness=8
+
+# Nord-flavored, neutral (independent of the active theme)
+color=2e3440
+inside-color=2e344088
+ring-color=88c0d0
+ring-clear-color=ebcb8b
+ring-ver-color=a3be8c
+ring-wrong-color=bf616a
+key-hl-color=a3be8c
+bs-hl-color=bf616a
+line-color=00000000
+separator-color=00000000
+text-color=d8dee9
+text-clear-color=2e3440
+text-ver-color=2e3440
+text-wrong-color=2e3440
