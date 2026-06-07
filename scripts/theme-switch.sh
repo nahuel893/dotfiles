@@ -167,6 +167,20 @@ selection-match=${ACCENT#\#}ff
 border=${ACCENT#\#}ff
 EOF
 
+# ── neovim (live: tell every running instance to switch colorscheme) ──
+case "$choice" in
+    nord)    nvim_cs="nord" ;;
+    gruvbox) nvim_cs="gruvbox" ;;
+    latte)   nvim_cs="catppuccin-latte" ;;
+    *)       nvim_cs="" ;;
+esac
+if [ -n "$nvim_cs" ] && command -v nvim >/dev/null 2>&1; then
+    for sock in "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/nvim.*; do
+        [ -S "$sock" ] || continue
+        nvim --server "$sock" --remote-expr "execute('colorscheme $nvim_cs')" >/dev/null 2>&1 || true
+    done
+fi
+
 # ── persist + live reload ──
 echo "$choice" > "$STATE_FILE"
 swaymsg reload          >/dev/null 2>&1 || true

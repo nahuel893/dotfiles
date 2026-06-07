@@ -8,6 +8,8 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.colorscheme.gruvbox-nvim" },
+  { import = "astrocommunity.colorscheme.nord-nvim" },
+  { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.terminal-integration.toggleterm-manager-nvim" },
   -- import/override with your plugins folder
 }
