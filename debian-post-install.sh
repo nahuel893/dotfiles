@@ -39,7 +39,7 @@ sudo apt-get install -y \
 # ─────────────────────────────────────────────
 log "Installing sway and the Wayland ecosystem..."
 sudo apt-get install -y \
-    sway swaybg swayidle swaylock \
+    sway swaybg swayidle swaylock xwayland \
     waybar mako-notifier rofi \
     grim slurp wl-clipboard \
     xdg-desktop-portal-wlr xdg-desktop-portal-gtk \
