@@ -23,19 +23,7 @@
         "tray"
     ],
     "sway/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": " ETL",
-            "2": " API",
-            "3": " DASH",
-            "4": " GEO",
-            "5": " VM",
-            "6": " SSH",
-            "7": "7",
-            "8": "8",
-            "9": " WEB",
-            "10": " SYS"
-        },
+        "format": "{value}",
         "disable-scroll": false,
         "sort-by-number": true,
         "persistent-workspaces": {
