@@ -99,19 +99,38 @@
                 ""
             ]
         },
-        "on-click": "pavucontrol",
-        "scroll-step": 5
+        "scroll-step": 5,
+        "on-click": "$HOME/dotfiles/scripts/audio-menu.sh",
+        "on-click-right": "pavucontrol",
+        "tooltip-format": "{desc}"
     },
     "network": {
         "format-wifi": " {essid}",
         "format-ethernet": " {ipaddr}",
         "format-disconnected": " offline",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n↑ {bandwidthUpBits}\n↓ {bandwidthDownBits}"
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n↑ {bandwidthUpBits}\n↓ {bandwidthDownBits}",
+        "on-click": "$HOME/dotfiles/scripts/wifi-menu.sh",
+        "on-click-right": "kitty --class nmtui -e nmtui"
     },
     "clock": {
         "format": " {:%H:%M}",
-        "format-alt": " {:%A %d %B %Y}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format-alt": " {:%a %d %b %Y}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "format": {
+                "months": "<b>{}</b>",
+                "today": "<b><u>{}</u></b>",
+                "weekdays": "<span color='#888888'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "tray": {
         "icon-size": 16,
