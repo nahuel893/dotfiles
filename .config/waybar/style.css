@@ -19,6 +19,7 @@ window#waybar {
 #memory,
 #temperature,
 #pulseaudio,
+#bluetooth,
 #network,
 #tray,
 #mode {
@@ -33,6 +34,7 @@ window#waybar {
 #memory:hover,
 #temperature:hover,
 #pulseaudio:hover,
+#bluetooth:hover,
 #network:hover,
 #clock:hover {
     background: alpha(@surface_bright, 0.45);
@@ -117,6 +119,13 @@ window#waybar {
 
 #pulseaudio        { color: @tertiary; }
 #pulseaudio.muted  { color: @outline; }
+
+/* ── Bluetooth ── */
+
+#bluetooth              { color: @primary; }
+#bluetooth.disabled,
+#bluetooth.off          { color: @outline; }
+#bluetooth.connected    { color: @tertiary; }
 
 /* ── Network ── */
 
