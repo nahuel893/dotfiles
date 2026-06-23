@@ -16,7 +16,7 @@ include ~/.config/sway/colors.conf
 
 ### Monitors ──────────────────────────────────────────────────────────────
 # DP-1  = external 144Hz, primary, left.   eDP-1 = laptop 60Hz, right.
-output DP-1  mode 1920x1080@144Hz position 0 0
+output DP-1  mode 1920x1080@144Hz position 0 0 adaptive_sync on
 output eDP-1 mode 1920x1080@60Hz  position 1920 0
 
 # Wallpaper handled by random-wallpaper.sh (swaybg); fallback solid color:
@@ -34,6 +34,26 @@ font pango:IosevkaTerm Nerd Font 10
 # Light transparency (no blur). Terminal keeps its own opacity on top.
 for_window [app_id=".*"] opacity 0.96
 for_window [class=".*"]  opacity 0.96
+
+### Gaming ──────────────────────────────────────────────────────────────────
+# Don't blank/lock the screen while a window is fullscreen (games, video,
+# gamepad sessions with no keyboard/mouse input).
+for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [class=".*"]  inhibit_idle fullscreen
+
+# Games must NOT inherit the global 0.96 opacity (they'd render translucent).
+for_window [class="steam_app_.*"] opacity 1.0
+for_window [class="^Steam$"]      opacity 1.0
+for_window [class="^steam$"]      opacity 1.0
+for_window [class="^hl_linux$"]   opacity 1.0
+for_window [class="^gamescope$"]  opacity 1.0
+for_window [app_id="^gamescope$"] opacity 1.0
+for_window [class="^lutris$"]     opacity 1.0
+for_window [instance="^wine$"]    opacity 1.0
+
+# Optional: allow screen tearing in fullscreen games for lower input lag.
+# Trade-off: visible tearing. Uncomment per game class if you want it.
+# for_window [class="steam_app_.*"] allow_tearing yes
 
 # Borders:           border    background  text  indicator  child_border
 client.focused          $accent   $accent   $fg   $accent    $accent
@@ -92,7 +112,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+t split toggle
 
 # Session
-#bindsym $mod+Shift+l exec swaylock -f
+bindsym $mod+Shift+p exec swaylock -f
 #bindsym $mod+Shift+h exec systemctl hibernate
 bindsym $mod+m exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
