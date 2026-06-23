@@ -16,7 +16,7 @@ include ~/.config/sway/colors.conf
 
 ### Monitors ──────────────────────────────────────────────────────────────
 # DP-1  = external 144Hz, primary, left.   eDP-1 = laptop 60Hz, right.
-output DP-1  mode 1920x1080@144Hz position 0 0 adaptive_sync on
+output DP-1  mode 1920x1080@144Hz position 0 0
 output eDP-1 mode 1920x1080@60Hz  position 1920 0
 
 # Wallpaper handled by random-wallpaper.sh (swaybg); fallback solid color:
