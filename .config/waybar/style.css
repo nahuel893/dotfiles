@@ -45,7 +45,7 @@ window#waybar {
     margin: 0 1px;
     min-width: 24px;
     min-height: 24px;
-    color: @outline;
+    color: @on_surface;
     background: transparent;
     border: none;
     border-radius: 6px;
@@ -58,10 +58,25 @@ window#waybar {
     margin: 0;
 }
 
+/* Empty (persistent, no windows): visible but dim */
+#workspaces button.empty {
+    color: alpha(@on_surface, 0.45);
+    font-weight: normal;
+}
+
+/* Has at least one window: highlighted with the accent + soft fill */
+#workspaces button:not(.empty) {
+    color: @primary;
+    background: alpha(@primary, 0.14);
+    font-weight: bold;
+}
+
+/* Currently focused workspace: full accent fill (wins over the rules above) */
 #workspaces button.focused,
 #workspaces button.active {
     color: @on_primary;
     background: @primary;
+    font-weight: bold;
 }
 
 #workspaces button:hover {
