@@ -123,6 +123,35 @@ window#waybar {
 #network               { color: @secondary; }
 #network.disconnected  { color: @error; }
 
+/* ── Backlight (icon + slider) ── */
+
+#backlight { color: @tertiary; }
+
+#backlight-slider {
+    padding: 0 10px;
+    margin: 2px 3px;
+}
+
+#backlight-slider trough {
+    min-width: 80px;
+    min-height: 6px;
+    border-radius: 8px;
+    background: alpha(@on_surface, 0.25);
+}
+
+#backlight-slider highlight {
+    background: @primary;
+    border-radius: 8px;
+}
+
+#backlight-slider slider {
+    background: @on_surface;
+    border-radius: 50%;
+    min-width: 12px;
+    min-height: 12px;
+    margin: -3px 0;
+}
+
 /* ── Mode (resize, etc.) ── */
 
 #mode {

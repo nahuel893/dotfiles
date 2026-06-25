@@ -47,6 +47,21 @@ sudo apt-get install -y \
     brightnessctl playerctl
 
 # ─────────────────────────────────────────────
+# 3b. Backlight permissions (Fn keys + waybar slider via brightnessctl)
+# Without the udev rule, /sys/class/backlight/*/brightness isn't writable by
+# the 'video' group, so brightnessctl gets PERMISSION DENIED. %k covers any
+# device name (intel_backlight, amdgpu_bl0, ...).
+# ─────────────────────────────────────────────
+log "Setting up backlight permissions..."
+sudo usermod -aG video "$USER" || warn "Could not add $USER to 'video' group."
+echo 'ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"' \
+    | sudo tee /etc/udev/rules.d/90-backlight.rules >/dev/null
+sudo udevadm control --reload-rules && sudo udevadm trigger -c add -s backlight || true
+for b in /sys/class/backlight/*/brightness; do
+    [ -e "$b" ] && { sudo chgrp video "$b"; sudo chmod g+w "$b"; }
+done
+
+# ─────────────────────────────────────────────
 # 4. Audio (PipeWire)
 # ─────────────────────────────────────────────
 log "Installing PipeWire and audio components..."

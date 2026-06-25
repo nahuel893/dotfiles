@@ -17,6 +17,8 @@
         "cpu",
         "memory",
         "temperature",
+        "backlight",
+        "backlight/slider",
         "pulseaudio",
         "network",
         "battery",
@@ -67,6 +69,17 @@
             "",
             ""
         ]
+    },
+    "backlight": {
+        "format": " {percent}%",
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "tooltip": false
+    },
+    "backlight/slider": {
+        "min": 5,
+        "max": 100,
+        "orientation": "horizontal"
     },
     "battery": {
         "states": {
