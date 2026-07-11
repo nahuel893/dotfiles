@@ -31,9 +31,9 @@ gaps outer 8
 smart_gaps on
 font pango:IosevkaTerm Nerd Font 10
 
-# Light transparency (no blur). Terminal keeps its own opacity on top.
-for_window [app_id=".*"] opacity 0.96
-for_window [class=".*"]  opacity 0.96
+# Transparency is opt-in per app.
+# Terminals (kitty/alacritty) set their own opacity in their own configs.
+# No global opacity rule so browsers and other apps stay fully opaque.
 
 ### Gaming ──────────────────────────────────────────────────────────────────
 # Don't blank/lock the screen while a window is fullscreen (games, video,
