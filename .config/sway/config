@@ -114,6 +114,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+t split toggle
 
 # Session
+bindsym $mod+Escape  exec swaylock -f
 bindsym $mod+Shift+p exec swaylock -f
 #bindsym $mod+Shift+h exec systemctl hibernate
 bindsym $mod+m exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
