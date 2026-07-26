@@ -1,3 +1,6 @@
 *.bak
 *.swp
 *~
+
+# Auto-generated skill registry (machine-local absolute paths)
+.atl/
