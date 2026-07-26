@@ -46,7 +46,7 @@ eval "$(starship init zsh)"
 # Override alias gga → Gentleman Guardian Angel
 unalias gga 2>/dev/null
 alias gga="$HOME/.local/bin/gga"
-
+alias cdr="claude --dangerously-skip-permissions  --resume"
 export QT_QPA_PLATFORM=xcb
 export QT_SCALE_FACTOR=1
 export PATH=~/.npm-global/bin:$PATH
