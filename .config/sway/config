@@ -132,6 +132,11 @@ bindsym $mod+w      exec $scripts/random-wallpaper.sh
 bindsym $mod+x      exec $scripts/theme-switch.sh next
 bindsym $mod+Shift+w exec $scripts/win10-vm.sh
 
+# Virtual VNC monitor toggle — turns another LAN device into a wireless
+# secondary screen. Workspace 10 lives on HEADLESS-1 when virtmon is running,
+# falling back to real outputs otherwise (see workspace binding below).
+bindsym $mod+F10    exec $scripts/virtmon-toggle.sh
+
 # Focus (vim keys)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -166,6 +171,9 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
+
+# Workspace 10 lives on the VNC virtual monitor when active, else on a real one.
+workspace 10 output HEADLESS-1 HDMI-A-1 eDP-1
 
 # Scroll over a free area / cycle workspaces
 bindsym $mod+Next workspace next

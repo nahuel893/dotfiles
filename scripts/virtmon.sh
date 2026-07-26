@@ -1,61 +1,71 @@
-#!/usr/bin/sh
-
-# VirtMon - Virtual Monitor via VNC
+#!/usr/bin/env sh
+#
+# VirtMon - Virtual Monitor via VNC (sway port)
 # Adapted from https://github.com/LinuxRenaissance/VirtMon
+#
+# Creates a headless output in sway, positions it to the right of the real
+# monitors, binds workspace 10 to it, and exposes it over LAN via wayvnc.
+# Any VNC client on the network can then use it as a wireless secondary screen.
+#
+# Trust model: no VNC auth. Only expose on trusted local networks.
 
 # ── CONFIG ──
 VIRTUAL_WORKSPACE=10
 REAL_MONITOR="HDMI-A-1"
-BIND_IP="192.168.1.1"
+BIND_IP="0.0.0.0"        # listen on all interfaces; restrict via firewall if needed
 VNC_PORT=5900
+VIRT_MODE="1920x1080@60Hz"
+VIRT_POS="3286 0"        # right of HDMI-A-1 (0,0 1920w) + eDP-1 (1920,0 1366w)
 
-# ── Remove existing headless monitors ──
-for MON in $(hyprctl monitors | grep HEADLESS | awk '{print $2}'); do
-  echo "[virtmon] Removing $MON..."
-  hyprctl output remove "$MON"
+# ── Remove existing headless outputs (clean slate) ──
+for MON in $(swaymsg -t get_outputs | jq -r '.[] | select(.name | startswith("HEADLESS")) | .name'); do
+    echo "[virtmon] Removing existing $MON..."
+    swaymsg output "$MON" unplug 2>/dev/null \
+        || swaymsg output "$MON" disable 2>/dev/null \
+        || true
 done
 
 # ── Cleanup on exit ──
 cleanup() {
-  echo "\n[virtmon] Cleaning up..."
-  hyprctl dispatch moveworkspacetomonitor $VIRTUAL_WORKSPACE $REAL_MONITOR
-  hyprctl dispatch focusmonitor "$REAL_MONITOR"
-  pkill wayvnc
-  hyprctl output remove "$VIRTUAL_MONITOR"
-  echo "[virtmon] Done."
-  exit 0
+    echo "[virtmon] Cleaning up..."
+    pkill -x wayvnc 2>/dev/null || true
+    if [ -n "${VIRTUAL_MONITOR:-}" ]; then
+        swaymsg output "$VIRTUAL_MONITOR" unplug 2>/dev/null \
+            || swaymsg output "$VIRTUAL_MONITOR" disable 2>/dev/null \
+            || true
+    fi
+    swaymsg focus output "$REAL_MONITOR" 2>/dev/null || true
+    echo "[virtmon] Done."
+    exit 0
 }
-
 trap cleanup INT TERM EXIT
 
-# ── Create virtual monitor and detect its name ──
-echo "[virtmon] Creating headless monitor..."
-hyprctl output create headless
-sleep 0.5
+# ── Create headless output and detect its name ──
+echo "[virtmon] Creating headless output..."
+swaymsg create_output >/dev/null
+sleep 0.4
 
-VIRTUAL_MONITOR=$(hyprctl monitors | grep HEADLESS | awk '{print $2}')
+VIRTUAL_MONITOR=$(swaymsg -t get_outputs | jq -r '.[] | select(.name | startswith("HEADLESS")) | .name' | head -n1)
 if [ -z "$VIRTUAL_MONITOR" ]; then
-  echo "[virtmon] ERROR: No headless monitor found"
-  exit 1
+    echo "[virtmon] ERROR: no headless output found"
+    exit 1
 fi
 echo "[virtmon] Detected: $VIRTUAL_MONITOR"
 
-# ── Position monitor to the left ──
-hyprctl keyword monitor "$VIRTUAL_MONITOR,1920x1080@60,1920x0,1.0"
-sleep 0.3
+# ── Position virtual monitor + set mode ──
+swaymsg output "$VIRTUAL_MONITOR" mode $VIRT_MODE position $VIRT_POS
+sleep 0.2
 
-# ── Assign workspace to virtual monitor ──
+# ── Bind workspace to the virtual monitor ──
 echo "[virtmon] Binding workspace $VIRTUAL_WORKSPACE to $VIRTUAL_MONITOR..."
-hyprctl keyword workspace "$VIRTUAL_WORKSPACE,monitor:$VIRTUAL_MONITOR,default:true"
+swaymsg workspace "$VIRTUAL_WORKSPACE" output "$VIRTUAL_MONITOR"
 sleep 0.2
-hyprctl dispatch moveworkspacetomonitor $VIRTUAL_WORKSPACE $VIRTUAL_MONITOR
-sleep 0.2
-hyprctl dispatch workspace $VIRTUAL_WORKSPACE
+swaymsg workspace "$VIRTUAL_WORKSPACE"
 sleep 0.2
 
 # ── Return focus to real monitor ──
-hyprctl dispatch focusmonitor "$REAL_MONITOR"
+swaymsg focus output "$REAL_MONITOR" 2>/dev/null || true
 
-# ── Start VNC server ──
-echo "[virtmon] Starting WayVNC on $BIND_IP:$VNC_PORT (-o $VIRTUAL_MONITOR)..."
-wayvnc -o "$VIRTUAL_MONITOR" "$BIND_IP" "$VNC_PORT"
+# ── Start VNC server bound to the headless output ──
+echo "[virtmon] Starting wayvnc on $BIND_IP:$VNC_PORT (-o $VIRTUAL_MONITOR)..."
+exec wayvnc -o "$VIRTUAL_MONITOR" "$BIND_IP" "$VNC_PORT"
