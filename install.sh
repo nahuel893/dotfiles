@@ -52,4 +52,8 @@ link .config/zellij/config.kdl
 # ── herdr ──
 link .config/herdr/config.toml
 
+# ── claude code status line ──
+link .claude/statusline.sh
+chmod +x "$HOME/.claude/statusline.sh"
+
 link .zshrc
