@@ -78,6 +78,12 @@ input "type:touchpad" {
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
+# Force-start the GTK xdg-desktop-portal backend.
+# Its .portal file declares UseIn=gnome only, so it won't auto-start in sway,
+# yet GTK is the only backend that implements FileChooser/Print/AppChooser.
+# Without this, Firefox/GTK apps can't show save/open dialogs.
+exec /usr/lib/xdg-desktop-portal-gtk &
+
 exec mako
 # exec_always so waybar survives reloads and refreshes on theme switch
 exec_always sh -c 'pkill -x waybar; sleep 0.2; waybar'
