@@ -14,7 +14,7 @@ set -euo pipefail
 DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 THEMES_DIR="$DOTFILES/themes"
 STATE_FILE="$HOME/.config/sway/.current-theme"
-CYCLE=(nord gruvbox latte)
+CYCLE=(nord gruvbox classic latte)
 
 usage() {
     echo "Usage: $(basename "$0") [${CYCLE[*]// /|}|next]"
