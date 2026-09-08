@@ -15,9 +15,9 @@ set $scripts ~/dotfiles/scripts
 include ~/.config/sway/colors.conf
 
 ### Monitors ──────────────────────────────────────────────────────────────
-# HDMI-A-1 = LG external 144Hz, primary, left.   eDP-1 = laptop 1366x768, right.
+# HDMI-A-1 = LG external 144Hz, primary, top.   eDP-1 = laptop 1366x768, below.
 output HDMI-A-1 mode 1920x1080@144Hz position 0 0
-output eDP-1    mode 1366x768@60Hz   position 1920 0
+output eDP-1    mode 1366x768@60Hz   position 0 1080
 
 # Wallpaper handled by random-wallpaper.sh (swaybg); fallback solid color:
 output * background $bg solid_color
@@ -172,8 +172,24 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
-# Workspace 10 lives on the VNC virtual monitor when active, else on a real one.
-workspace 10 output HEADLESS-1 HDMI-A-1 eDP-1
+# ── Workspace → output ──
+# HDMI is the primary screen and holds workspaces 1-9; the laptop (eDP-1) holds
+# only workspace 10. Each lists the other output as a fallback, so when no HDMI
+# is connected every workspace lands on the laptop.
+workspace 1  output HDMI-A-1 eDP-1
+workspace 2  output HDMI-A-1 eDP-1
+workspace 3  output HDMI-A-1 eDP-1
+workspace 4  output HDMI-A-1 eDP-1
+workspace 5  output HDMI-A-1 eDP-1
+workspace 6  output HDMI-A-1 eDP-1
+workspace 7  output HDMI-A-1 eDP-1
+workspace 8  output HDMI-A-1 eDP-1
+workspace 9  output HDMI-A-1 eDP-1
+workspace 10 output HEADLESS-1 eDP-1 HDMI-A-1
+
+# HDMI is the primary screen: start focused there when it's connected
+# (harmless no-op when it isn't).
+focus output HDMI-A-1
 
 # Scroll over a free area / cycle workspaces
 bindsym $mod+Next workspace next
