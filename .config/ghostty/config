@@ -4,9 +4,6 @@ shell-integration = zsh
 
 # ── Font ──
 font-family = IosevkaTerm Nerd Font
-font-family-bold = IosevkaTerm Nerd Font Bold
-font-family-italic = IosevkaTerm Nerd Font Italic
-font-family-bold-italic = IosevkaTerm Nerd Font Bold Italic
 font-size = 10
 
 # ── Window ──
