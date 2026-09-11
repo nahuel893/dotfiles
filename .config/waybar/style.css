@@ -51,7 +51,9 @@ window#waybar {
     background: transparent;
     border: none;
     border-radius: 6px;
-    transition: all 0.2s ease;
+    /* No transition here on purpose: waybar redraws the whole bar whenever
+       sway/window title changes, which re-fires `transition: all` and makes
+       the workspace buttons flicker. Hover still looks fine without it. */
 }
 
 #workspaces button label {
@@ -96,6 +98,30 @@ window#waybar {
 @keyframes pulse {
     from { background: alpha(@error, 0.10); }
     to   { background: alpha(@error, 0.30); }
+}
+
+/* ── Taskbar (open windows) ── */
+
+#taskbar {
+    padding: 2px 6px;
+    margin: 2px 3px;
+    border-radius: 8px;
+    background: alpha(@surface_container, 0.65);
+}
+
+#taskbar button {
+    padding: 2px 4px;
+    margin: 0 1px;
+    border-radius: 6px;
+    background: transparent;
+}
+
+#taskbar button.active {
+    background: alpha(@primary, 0.25);
+}
+
+#taskbar button:hover {
+    background: alpha(@surface_bright, 0.3);
 }
 
 /* ── Clock ── */
