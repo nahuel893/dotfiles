@@ -28,3 +28,7 @@ ERROR="#ffb4ab"
 BORDER="#322825"
 BORDER_INACTIVE="#271d1b"
 IS_LIGHT=0
+
+# Source image this palette was generated from. theme-switch.sh applies it, so
+# the colors always match what is on screen. Relative to $WALLPAPER_DIR.
+WALLPAPER="a_purple_and_orange_mountain_range.png"

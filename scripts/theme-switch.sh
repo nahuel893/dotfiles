@@ -36,6 +36,10 @@ fi
 PALETTE="$THEMES_DIR/$choice.sh"
 [ -f "$PALETTE" ] || { echo "[x] Theme '$choice' not found."; usage; }
 
+# Cleared before sourcing: palettes that declare no wallpaper must not inherit
+# one from the environment.
+WALLPAPER=""
+
 # shellcheck source=/dev/null
 source "$PALETTE"
 
@@ -266,6 +270,19 @@ fi
 # ── persist + live reload ──
 echo "$choice" > "$STATE_FILE"
 swaymsg reload          >/dev/null 2>&1 || true
+
+# ── wallpaper (only for palettes generated from one) ──
+# Runs after the reload so nothing sway spawns can land on top of it.
+if [ -n "${WALLPAPER:-}" ]; then
+    [ -z "${WALLPAPER_DIR:-}" ] && [ -f "$DOTFILES/.env" ] && source "$DOTFILES/.env"
+    WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
+    wall_path="$WALLPAPER_DIR/$WALLPAPER"
+    if [ -f "$wall_path" ]; then
+        "$DOTFILES/scripts/set-wallpaper.sh" "$wall_path" >/dev/null 2>&1 || true
+    else
+        echo "[!] Wallpaper for '$choice' not found: $wall_path" >&2
+    fi
+fi
 makoctl reload          >/dev/null 2>&1 || true
 pkill -SIGUSR1 -x kitty >/dev/null 2>&1 || true   # kitty live config reload
 command -v herdr >/dev/null 2>&1 && herdr server reload-config >/dev/null 2>&1 || true

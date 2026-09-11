@@ -19,8 +19,10 @@ include ~/.config/sway/colors.conf
 output HDMI-A-1 mode 1920x1080@144Hz position 0 0
 output eDP-1    mode 1366x768@60Hz   position 0 1080
 
-# Wallpaper handled by random-wallpaper.sh (swaybg); fallback solid color:
-output * background $bg solid_color
+# No `output * background` here on purpose. sway respawns its own swaybg on
+# every `swaymsg reload` (theme-switch.sh triggers one), and that process
+# renders on top of the wallpaper. scripts/set-wallpaper.sh is the single
+# owner of the background.
 
 ### Look & feel ───────────────────────────────────────────────────────────
 default_border pixel 2

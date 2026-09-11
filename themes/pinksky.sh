@@ -28,3 +28,7 @@ ERROR="#ffb4ab"
 BORDER="#272a2f"
 BORDER_INACTIVE="#1d2024"
 IS_LIGHT=0
+
+# Source image this palette was generated from. theme-switch.sh applies it, so
+# the colors always match what is on screen. Relative to $WALLPAPER_DIR.
+WALLPAPER="a_landscape_of_mountains_and_a_pink_sky.png"

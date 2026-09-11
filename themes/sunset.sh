@@ -28,3 +28,7 @@ ERROR="#ffb4ab"
 BORDER="#312822"
 BORDER_INACTIVE="#261e18"
 IS_LIGHT=0
+
+# Source image this palette was generated from. theme-switch.sh applies it, so
+# the colors always match what is on screen. Relative to $WALLPAPER_DIR.
+WALLPAPER="a_sunset_over_a_mountain_range_01.png"
