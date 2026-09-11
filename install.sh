@@ -61,3 +61,16 @@ link .claude/statusline.sh
 chmod +x "$HOME/.claude/statusline.sh"
 
 link .zshrc
+
+# ── wallpapers ──
+# Symlinked, not copied: the palettes in themes/ are matugen-derived from these
+# exact images, so they have to travel with the repo. Symlinks keep a single
+# copy on disk and leave ~/Pictures/wallpapers open for your own additions,
+# which Mod+w will still pick up.
+mkdir -p "$HOME/Pictures/wallpapers"
+for wall in "$DOTFILES_DIR"/wallpapers/*; do
+    [ -e "$wall" ] || continue
+    dest="$HOME/Pictures/wallpapers/$(basename "$wall")"
+    ln -sf "$wall" "$dest"
+    echo "[+] $dest -> $wall"
+done
