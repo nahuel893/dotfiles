@@ -52,3 +52,6 @@ export QT_SCALE_FACTOR=1
 export PATH=~/.npm-global/bin:$PATH
 
 
+
+# opencode
+export PATH=/home/nh/.opencode/bin:$PATH
