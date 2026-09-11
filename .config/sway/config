@@ -19,8 +19,10 @@ include ~/.config/sway/colors.conf
 output HDMI-A-1 mode 1920x1080@144Hz position 0 0
 output eDP-1    mode 1366x768@60Hz   position 0 1080
 
-# Wallpaper handled by random-wallpaper.sh (swaybg); fallback solid color:
-output * background $bg solid_color
+# No `output * background` here on purpose. sway respawns its own swaybg on
+# every `swaymsg reload` (theme-switch.sh triggers one), and that process
+# renders on top of the wallpaper. scripts/set-wallpaper.sh is the single
+# owner of the background.
 
 ### Look & feel ───────────────────────────────────────────────────────────
 default_border pixel 2
@@ -87,6 +89,10 @@ exec /usr/lib/xdg-desktop-portal-gtk &
 exec mako
 # exec_always so waybar survives reloads and refreshes on theme switch
 exec_always sh -c 'pkill -x waybar; sleep 0.2; waybar'
+# Rename workspaces to show the icons of the apps open in them (daemon).
+# Disabled: it conflicts with waybar's persistent-workspaces (numbered 1-10).
+# Enable this AND remove persistent-workspaces in waybar/config.jsonc to use it.
+# exec $scripts/ws-autoname.sh
 exec $scripts/random-wallpaper.sh
 exec sh -c '/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 || /usr/libexec/polkit-gnome-authentication-agent-1'
 # Idle: lock at 10min, screen off at 15min, lock before sleep.
@@ -120,8 +126,13 @@ bindsym $mod+f fullscreen
 bindsym $mod+t split toggle
 
 # Session
-# Lock screen — Super+Shift+l conflicts with `move right` (vim keys),
-# so we use Super+Escape instead.
+# Lock screen. Three binds, all swaylock:
+#   Super+Ctrl+L → "L = Lock" (matches the old Hyprland muscle memory).
+#     Plain Super+L and Super+Shift+L are taken by the vim focus/move binds,
+#     so Ctrl is the free modifier here.
+#   Super+Escape → quick lock.
+#   Super+Shift+P → legacy bind, kept so old muscle memory still works.
+bindsym $mod+Ctrl+l  exec swaylock -f
 bindsym $mod+Escape  exec swaylock -f
 bindsym $mod+Shift+p exec swaylock -f
 #bindsym $mod+Shift+h exec systemctl hibernate
