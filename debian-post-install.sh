@@ -133,6 +133,17 @@ if [ "$SHELL" != "$(command -v zsh)" ]; then
 fi
 
 # ─────────────────────────────────────────────
+# 7b. oh-my-posh (prompt)
+# ─────────────────────────────────────────────
+if command -v oh-my-posh >/dev/null 2>&1; then
+    warn "oh-my-posh already installed, skipping."
+else
+    log "Installing oh-my-posh (official installer)..."
+    mkdir -p "$HOME/.local/bin"
+    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d "$HOME/.local/bin" || warn "oh-my-posh install failed; .zshrc falls back to starship."
+fi
+
+# ─────────────────────────────────────────────
 # 8. AstroNvim + dependencies
 # ─────────────────────────────────────────────
 log "Installing AstroNvim dependencies..."

@@ -136,6 +136,20 @@ else
 fi
 
 # ─────────────────────────────────────────────
+# 8b. oh-my-posh (prompt)
+# ─────────────────────────────────────────────
+if command -v oh-my-posh >/dev/null 2>&1; then
+    warn "oh-my-posh already installed, skipping."
+elif command -v yay >/dev/null 2>&1; then
+    log "Installing oh-my-posh (AUR: oh-my-posh-bin)..."
+    yay -S --needed --noconfirm oh-my-posh-bin || warn "oh-my-posh install failed; .zshrc falls back to starship."
+else
+    log "Installing oh-my-posh (official installer, no AUR helper found)..."
+    mkdir -p "$HOME/.local/bin"
+    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d "$HOME/.local/bin" || warn "oh-my-posh install failed; .zshrc falls back to starship."
+fi
+
+# ─────────────────────────────────────────────
 # 9. AstroNvim + dependencies
 # ─────────────────────────────────────────────
 log "Installing AstroNvim dependencies..."

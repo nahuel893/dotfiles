@@ -40,8 +40,12 @@ function preexec() {
     print -Pn "\e]2;$1\a"
 }
 
-# Starship prompt
-eval "$(starship init zsh)"
+# Prompt: oh-my-posh, with starship as fallback if the binary is missing
+if command -v oh-my-posh >/dev/null 2>&1; then
+    eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/gentleman.omp.json")"
+else
+    eval "$(starship init zsh)"
+fi
 
 # Override alias gga → Gentleman Guardian Angel
 unalias gga 2>/dev/null

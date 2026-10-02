@@ -21,7 +21,11 @@ link .config/kitty/kitty.conf
 link .config/hypr/hyprland.conf
 link .config/hypr/hyprlock.conf
 link .config/hypr/hyprpaper.conf
+
+# ── prompt (oh-my-posh is active; starship stays as fallback) ──
 link .config/starship.toml
+link .config/oh-my-posh/gentleman.omp.json
+
 link .config/fontconfig/fonts.conf
 link .config/nvim/lua/community.lua
 link .config/nvim/lua/lazy_setup.lua
