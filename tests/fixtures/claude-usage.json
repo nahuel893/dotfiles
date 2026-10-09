@@ -1,0 +1,28 @@
+{
+  "five_hour": {
+    "utilization": 7.0,
+    "resets_at": "2026-10-09T22:09:59.846491+00:00"
+  },
+  "seven_day": {
+    "utilization": 55.0,
+    "resets_at": "2026-10-11T02:59:59.846514+00:00"
+  },
+  "spend": {
+    "used": {
+      "amount_minor": 206,
+      "currency": "USD",
+      "exponent": 2
+    },
+    "limit": {
+      "amount_minor": 22000,
+      "currency": "USD",
+      "exponent": 2
+    },
+    "percent": 0,
+    "severity": "normal",
+    "enabled": true,
+    "disabled_reason": "out_of_credits",
+    "can_purchase_credits": false,
+    "can_toggle": false
+  }
+}

@@ -14,6 +14,7 @@
         "wlr/taskbar"
     ],
     "modules-right": [
+        "custom/claude",
         "cpu",
         "memory",
         "temperature",
@@ -53,6 +54,14 @@
         "on-click": "activate",
         "on-click-middle": "close",
         "all-outputs": false
+    },
+    "custom/claude": {
+        "exec": "$HOME/dotfiles/scripts/waybar-claude-usage.sh",
+        "return-type": "json",
+        "interval": 5,
+        "signal": 8,
+        "on-click": "$HOME/dotfiles/scripts/waybar-claude-usage.sh cycle",
+        "on-click-right": "$HOME/dotfiles/scripts/waybar-claude-usage.sh refresh"
     },
     "cpu": {
         "format": " {usage}%",

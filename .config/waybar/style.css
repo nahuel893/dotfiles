@@ -14,6 +14,7 @@ window#waybar {
 /* ── General modules (light transparency) ── */
 
 #workspaces,
+#custom-claude,
 #clock,
 #cpu,
 #memory,
@@ -30,6 +31,7 @@ window#waybar {
     transition: background 0.25s ease, color 0.25s ease;
 }
 
+#custom-claude:hover,
 #cpu:hover,
 #memory:hover,
 #temperature:hover,
@@ -140,6 +142,17 @@ window#waybar {
     color: @error;
     animation: pulse 1s ease-in-out infinite alternate;
 }
+
+/* ── Claude usage ── */
+
+#custom-claude          { color: @primary; }
+#custom-claude.warning  { color: @tertiary; }
+#custom-claude.critical {
+    color: @error;
+    animation: pulse 1s ease-in-out infinite alternate;
+}
+#custom-claude.stale,
+#custom-claude.error    { color: @outline; }
 
 /* ── Audio ── */
 
