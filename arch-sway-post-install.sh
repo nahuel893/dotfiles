@@ -186,6 +186,12 @@ else
 fi
 
 # ─────────────────────────────────────────────
+# Memory: zram + earlyoom (no freeze when RAM fills up)
+# ─────────────────────────────────────────────
+log "Setting up zram + earlyoom..."
+bash "$DOTFILES_DIR/scripts/memory-setup.sh"
+
+# ─────────────────────────────────────────────
 # Summary
 # ─────────────────────────────────────────────
 echo ""

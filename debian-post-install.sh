@@ -193,6 +193,12 @@ log "Applying initial theme (nord)..."
 bash "$DOTFILES_DIR/scripts/theme-switch.sh" nord || warn "theme-switch will run on first sway login."
 
 # ─────────────────────────────────────────────
+# Memory: zram + earlyoom (no freeze when RAM fills up)
+# ─────────────────────────────────────────────
+log "Setting up zram + earlyoom..."
+bash "$DOTFILES_DIR/scripts/memory-setup.sh"
+
+# ─────────────────────────────────────────────
 # Summary
 # ─────────────────────────────────────────────
 echo ""

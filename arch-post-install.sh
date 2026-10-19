@@ -213,6 +213,12 @@ else
 fi
 
 # ─────────────────────────────────────────────
+# Memoria: zram + earlyoom (que no se clave con la RAM llena)
+# ─────────────────────────────────────────────
+log "Configurando zram + earlyoom..."
+bash "$(dirname "$0")/scripts/memory-setup.sh"
+
+# ─────────────────────────────────────────────
 # Resumen
 # ─────────────────────────────────────────────
 echo ""

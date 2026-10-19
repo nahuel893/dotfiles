@@ -432,6 +432,31 @@ La hibernación guarda toda la RAM a disco y apaga. Al encender, restaura la ses
 
 ---
 
+## Memoria: que no se clave con la RAM llena
+
+`scripts/memory-setup.sh` (lo corren también los post-install). Instala y copia a `/etc` lo que está en `system/`.
+
+**Por qué se clava.** Cuando la RAM se llena, el kernel no mata nada todavía: primero tira la caché de archivos, incluido el *código* de los programas que están corriendo. Cada programa que quiere ejecutar una instrucción tiene que releerla del disco, y al rato la vuelve a tirar. Eso es *thrashing*: la máquina pasa el 100% del tiempo esperando al disco. El OOM killer del kernel sólo actúa cuando ya no queda nada reclamable, y con 16 GB de swap en disco eso puede tardar minutos u horas.
+
+| Pieza | Archivo | Qué hace |
+|-------|---------|----------|
+| zram | `system/etc/systemd/zram-generator.conf` | Swap comprimido (zstd, ~3:1) en RAM, tamaño `ram / 2`, prioridad 100. Se usa antes que el swap en disco (prioridad negativa) |
+| earlyoom | `system/etc/systemd/system/earlyoom.service.d/override.conf` | Con ≤5% de RAM disponible manda SIGTERM al proceso con mayor `oom_score` (≤2.5% → SIGKILL). Ignora el swap (`-s 100,100`). Prefiere matar pestañas de navegador/electron/java; nunca el compositor, la terminal ni el audio |
+| sysctl | `system/etc/sysctl.d/99-memory.conf` | `swappiness=180`, `page-cluster=0`, watermarks para zram. `kernel.sysrq=244` |
+| zswap off | `system/etc/tmpfiles.d/zswap-off.conf` | Apaga zswap en cada boot (compite con zram) |
+
+El swap en disco no se toca: sigue siendo el destino de la hibernación.
+
+```bash
+swapon --show                 # zram0 con prioridad 100 arriba del disco
+zramctl                       # datos guardados vs RAM real usada
+journalctl -u earlyoom        # qué mató y cuándo
+```
+
+Botón de pánico si algo se escapa igual: **Alt + ImprPant + F** fuerza el OOM killer del kernel al instante.
+
+---
+
 ## Flujo de reinstalación
 
 ```bash
