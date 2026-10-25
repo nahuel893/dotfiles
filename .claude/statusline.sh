@@ -6,6 +6,18 @@ input=$(cat)
 
 jqr() { jq -r "$1 // empty" <<<"$input" 2>/dev/null; }
 
+# openskin's status panel redraws this line beside the transcript: keep each session's latest
+# input for it. Where the panel is docked it marks the session, and the line here stays empty;
+# the panel runs this script with OPENSKIN_PANEL=1 to get the lines it draws.
+SESSION_ID=$(jqr '.session_id')
+if [ -n "$SESSION_ID" ]; then
+  OPENSKIN=~/.cache/openskin
+  mkdir -p "$OPENSKIN/sessions" &&
+    printf '%s' "$input" >"$OPENSKIN/sessions/$SESSION_ID.json.tmp" &&
+    mv -f "$OPENSKIN/sessions/$SESSION_ID.json.tmp" "$OPENSKIN/sessions/$SESSION_ID.json"
+  [ -z "$OPENSKIN_PANEL" ] && [ -e "$OPENSKIN/docked/$SESSION_ID" ] && exit 0
+fi
+
 MODEL=$(jqr '.model.display_name')
 DIR=$(jqr '.workspace.current_dir // .cwd')
 DIRNAME="${DIR##*/}"
@@ -31,8 +43,7 @@ PCT=$(jqr '.context_window.used_percentage')
 IN_TOK=$(jqr '.context_window.total_input_tokens')
 CTX_SIZE=$(jqr '.context_window.context_window_size')
 
-RL_5H=$(jqr '.rate_limits.five_hour.used_percentage')
-RL_7D=$(jqr '.rate_limits.seven_day.used_percentage')
+# The 5-hour and weekly windows are left to better-claude's sub-meter (and openskin's panel).
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; DIM='\033[2m'; RESET='\033[0m'
 
@@ -113,8 +124,6 @@ META_PARTS=()
 [ -n "$STYLE" ] && META_PARTS+=("🎨 ${STYLE}")
 [ "$FAST" = "true" ] && META_PARTS+=("⚡fast")
 [ -n "$VIM_MODE" ] && META_PARTS+=("⌨ ${VIM_MODE}")
-[ -n "$RL_5H" ] && META_PARTS+=("5h:$(printf '%.0f' "$RL_5H")%")
-[ -n "$RL_7D" ] && META_PARTS+=("7d:$(printf '%.0f' "$RL_7D")%")
 [ -n "$VERSION" ] && META_PARTS+=("${DIM}v${VERSION}${RESET}")
 
 LINE3=$(join_parts "${META_PARTS[@]}")
