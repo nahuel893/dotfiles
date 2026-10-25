@@ -199,7 +199,9 @@
     "think-hard@better-claude": true,
     "token-meter@better-claude": false,
     "openskin@extras-claude-code": true,
-    "command-register@extras-claude-code": true
+    "command-register@extras-claude-code": true,
+    "board@extras-claude-code": true,
+    "summarize@extras-claude-code": true
   },
   "extraKnownMarketplaces": {
     "engram": {
@@ -230,6 +232,19 @@
     "claude-opus-5-5": {
       "effortLevel": "high",
       "autoCompactWindow": 400000
+    }
+  },
+  "pluginConfigs": {
+    "openskin@extras-claude-code": {
+      "options": {
+        "accent": "#c4a7e7",
+        "surface": "#26233a",
+        "toolBar": "#403d52",
+        "error": "#eb6f92",
+        "muted": "#908caa",
+        "command": "#9ccfd8",
+        "background": "#191724"
+      }
     }
   },
   "tui": "fullscreen",
