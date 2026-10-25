@@ -363,12 +363,14 @@ fi
 # ── Claude Code: the preset's openskin colors + Claude Code's theme. settings.json
 #    is usually a symlink into the dotfiles repo: write the resolved file (never
 #    replace the link), through a temp file in the same directory, keeping every
-#    other key (panelBackground included). Never fatal for the desktop switch. ──
+#    other key. panelBackground follows the terminal background kitty just got, so
+#    the status panel blends in. Never fatal for the desktop switch. ──
 apply_openskin() {
     local s_name s_cc s_accent s_surface s_toolbar s_error s_muted s_command s_background
-    local link="$HOME/.claude/settings.json" settings tmp
+    local link="$HOME/.claude/settings.json" settings tmp panel
     IFS='|' read -r s_name _ _ _ s_cc s_accent s_surface s_toolbar s_error s_muted \
         s_command s_background _ <<<"$skin_row"
+    panel="$(awk '$1 == "background" { print $2; exit }' "$HOME/.config/kitty/matugen.conf" 2>/dev/null)"
 
     command -v jq >/dev/null 2>&1 || { echo "[!] jq not found: openskin left as it is." >&2; return 0; }
     [ -f "$link" ] || { echo "[!] $link not found: openskin left as it is." >&2; return 0; }
@@ -378,11 +380,12 @@ apply_openskin() {
 
     if jq --arg cc "$s_cc" --arg accent "$s_accent" --arg surface "$s_surface" \
         --arg toolBar "$s_toolbar" --arg error "$s_error" --arg muted "$s_muted" \
-        --arg command "$s_command" --arg background "$s_background" '
+        --arg command "$s_command" --arg background "$s_background" --arg panel "$panel" '
         .theme = $cc
         | .pluginConfigs["openskin@extras-claude-code"].options += {
             accent: $accent, surface: $surface, toolBar: $toolBar, error: $error,
             muted: $muted, command: $command, background: $background }
+        | if $panel != "" then .pluginConfigs["openskin@extras-claude-code"].options.panelBackground = $panel else . end
         ' "$settings" > "$tmp"; then
         chmod --reference="$settings" "$tmp" 2>/dev/null || true
         mv -f "$tmp" "$settings"
