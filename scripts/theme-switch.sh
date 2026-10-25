@@ -11,6 +11,7 @@
 #   theme-switch.sh nord|gruvbox|latte|tokyonight|...   # set a specific theme
 #   theme-switch.sh default    # openskin's own look; the desktop keeps its theme
 #   theme-switch.sh next       # cycle to the next theme
+#   theme-switch.sh pick       # choose one in fuzzel
 #   theme-switch.sh            # re-apply the current theme
 #
 # Aliases: gruvbox-dark = gruvbox, catppuccin-latte = latte (the desktop keeps
@@ -46,6 +47,15 @@ if [ "$choice" = "next" ]; then
     idx=0
     for i in "${!CYCLE[@]}"; do [ "${CYCLE[$i]}" = "$current" ] && idx=$i; done
     choice="${CYCLE[$(((idx + 1) % ${#CYCLE[@]}))]}"
+    requested="$choice"
+fi
+
+# "pick" asks for a theme in fuzzel (sway's launcher); cancelling changes nothing
+if [ "$choice" = "pick" ]; then
+    current="$(cat "$STATE_FILE" 2>/dev/null || true)"
+    choice="$(printf '%s\n' "${CYCLE[@]}" default |
+        fuzzel --dmenu --prompt "theme ($current) " 2>/dev/null)" || exit 0
+    [ -n "$choice" ] || exit 0
     requested="$choice"
 fi
 

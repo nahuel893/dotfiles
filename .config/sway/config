@@ -141,6 +141,7 @@ bindsym $mod+m exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 # Rice
 bindsym $mod+w      exec $scripts/random-wallpaper.sh
 bindsym $mod+x      exec $scripts/theme-switch.sh next
+bindsym $mod+Shift+x exec $scripts/theme-switch.sh pick
 bindsym $mod+Shift+w exec $scripts/win10-vm.sh
 
 # Virtual VNC monitor toggle — turns another LAN device into a wireless
