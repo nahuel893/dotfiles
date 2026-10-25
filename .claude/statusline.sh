@@ -7,8 +7,8 @@ input=$(cat)
 jqr() { jq -r "$1 // empty" <<<"$input" 2>/dev/null; }
 
 # openskin's status panel redraws this line beside the transcript: keep each session's latest
-# input for it. Where the panel is docked it marks the session, and the line here keeps only
-# the model and the vim mode; the panel runs this script with OPENSKIN_PANEL=1 to get the rest.
+# input for it. Where the panel is docked it marks the session, and the line here keeps what is
+# read at a glance; the panel runs this script with OPENSKIN_PANEL=1 to get the rest.
 SESSION_ID=$(jqr '.session_id')
 DOCKED=""
 if [ -n "$SESSION_ID" ]; then
@@ -55,11 +55,14 @@ if [ -n "$VIM_MODE" ]; then
     VIM_SEG="${VIM_COLOR}⌨ ${VIM_MODE}${RESET}"
 fi
 
-# Docked: the panel shows everything else, so the line under the prompt is the model and the mode.
-if [ -n "$DOCKED" ]; then
-    echo -e "${CYAN}[${MODEL}]${RESET}${VIM_SEG:+  $VIM_SEG}"
-    exit 0
-fi
+# join_parts drops empty args so optional segments never leave a dangling " | "
+join_parts() {
+    local out="" p
+    for p in "$@"; do
+        [ -n "$p" ] && out="${out}${out:+ | }${p}"
+    done
+    printf '%s' "$out"
+}
 
 # --- git branch + dirty state ---
 GIT_SEG=""
@@ -73,22 +76,20 @@ if git -C "$DIR" rev-parse --git-dir >/dev/null 2>&1; then
     [ "$STAGED" -gt 0 ] && DIRTY="${DIRTY}${GREEN}+${STAGED}${RESET}"
     [ "$MODIFIED" -gt 0 ] && DIRTY="${DIRTY}${YELLOW}~${MODIFIED}${RESET}"
     [ "$UNTRACKED" -gt 0 ] && DIRTY="${DIRTY}${DIM}?${UNTRACKED}${RESET}"
-    GIT_SEG=" | 🌿 ${BRANCH}${DIRTY:+ $DIRTY}"
+    GIT_SEG="🌿 ${BRANCH}${DIRTY:+ $DIRTY}"
 fi
 
 # --- repo / PR / worktree / subagent ---
 REPO_SEG=""
-[ -n "$REPO_OWNER" ] && REPO_SEG=" | 🔗 ${REPO_OWNER}/${REPO_NAME}"
+[ -n "$REPO_OWNER" ] && REPO_SEG="🔗 ${REPO_OWNER}/${REPO_NAME}"
 [ -n "$PR_NUM" ] && REPO_SEG="${REPO_SEG} #${PR_NUM}${PR_STATE:+ (${PR_STATE})}"
 WORKTREE_SEG=""
-[ -n "$WORKTREE" ] && WORKTREE_SEG=" | 🌳 ${WORKTREE}"
+[ -n "$WORKTREE" ] && WORKTREE_SEG="🌳 ${WORKTREE}"
 AGENT_SEG=""
-[ -n "$AGENT" ] && AGENT_SEG=" | 🤖 ${AGENT}"
+[ -n "$AGENT" ] && AGENT_SEG="🤖 ${AGENT}"
 
-# For the panel, the model and the vim mode stay under the prompt.
-MODEL_SEG="${CYAN}[${MODEL}]${RESET} "
-[ -n "$OPENSKIN_PANEL" ] && MODEL_SEG="" && VIM_SEG=""
-LINE1="${MODEL_SEG}📁 ${DIRNAME}${GIT_SEG}${REPO_SEG}${WORKTREE_SEG}${AGENT_SEG}"
+MODEL_SEG="${CYAN}[${MODEL}]${RESET}"
+DIR_SEG="📁 ${DIRNAME}"
 
 # --- context usage bar ---
 PCT_INT=${PCT%%.*}
@@ -105,9 +106,11 @@ else BAR_COLOR="$GREEN"; fi
 
 TOK_SEG=""
 [ -n "$IN_TOK" ] && TOK_SEG=" (${IN_TOK}/${CTX_SIZE})"
+CTX_SEG="${BAR_COLOR}${BAR}${RESET} ${PCT_INT}%${TOK_SEG}"
 
 COST_FMT='$0.00'
 [ -n "$COST" ] && COST_FMT=$(printf '$%.2f' "$COST")
+COST_SEG="${YELLOW}${COST_FMT}${RESET}"
 
 DUR_SEG=""
 if [ -n "$DUR_MS" ]; then
@@ -124,28 +127,32 @@ if [ -n "$LINES_ADD" ] || [ -n "$LINES_DEL" ]; then
     LINES_SEG="${GREEN}+${LINES_ADD:-0}${RESET}/${RED}-${LINES_DEL:-0}${RESET}"
 fi
 
-# join_parts drops empty args so optional segments never leave a dangling " | "
-join_parts() {
-    local out="" p
-    for p in "$@"; do
-        [ -n "$p" ] && out="${out}${out:+ | }${p}"
-    done
-    printf '%s' "$out"
-}
+EFFORT_SEG=""
+[ -n "$EFFORT" ] && EFFORT_SEG="🎚 ${EFFORT}"
+STYLE_SEG=""
+[ -n "$STYLE" ] && STYLE_SEG="🎨 ${STYLE}"
+FAST_SEG=""
+[ "$FAST" = "true" ] && FAST_SEG="⚡fast"
+VERSION_SEG=""
+[ -n "$VERSION" ] && VERSION_SEG="${DIM}v${VERSION}${RESET}"
 
-LINE2=$(join_parts "${BAR_COLOR}${BAR}${RESET} ${PCT_INT}%${TOK_SEG}" "${YELLOW}${COST_FMT}${RESET}" "$DUR_SEG" "$LINES_SEG")
+# Docked: one line under the prompt with what is read at a glance; the panel draws the rest
+# (its Status card has the folder, the branch and the changes).
+if [ -n "$DOCKED" ]; then
+    echo -e "$(join_parts "$MODEL_SEG" "$VIM_SEG" "$COST_SEG" "$DUR_SEG" "$EFFORT_SEG" "$STYLE_SEG")"
+    exit 0
+fi
 
-# --- session metadata ---
-META_PARTS=()
-[ -n "$EFFORT" ] && META_PARTS+=("🎚 ${EFFORT}")
-[ -n "$STYLE" ] && META_PARTS+=("🎨 ${STYLE}")
-[ "$FAST" = "true" ] && META_PARTS+=("⚡fast")
-[ -n "$VIM_SEG" ] && META_PARTS+=("$VIM_SEG")
-[ -n "$VERSION" ] && META_PARTS+=("${DIM}v${VERSION}${RESET}")
+# The panel: whatever the docked line leaves out (its context bar gives way to the Context section).
+if [ -n "$OPENSKIN_PANEL" ]; then
+    PANEL_LINE=$(join_parts "$REPO_SEG" "$WORKTREE_SEG" "$AGENT_SEG" "$FAST_SEG" "$VERSION_SEG")
+    [ -n "$PANEL_LINE" ] && echo -e "$PANEL_LINE"
+    exit 0
+fi
 
-LINE3=$(join_parts "${META_PARTS[@]}")
-
-echo -e "$LINE1"
-echo -e "$LINE2"
+# Undocked: the whole status line.
+echo -e "$(join_parts "$MODEL_SEG $DIR_SEG" "$GIT_SEG" "$REPO_SEG" "$WORKTREE_SEG" "$AGENT_SEG")"
+echo -e "$(join_parts "$CTX_SEG" "$COST_SEG" "$DUR_SEG" "$LINES_SEG")"
+LINE3=$(join_parts "$EFFORT_SEG" "$STYLE_SEG" "$FAST_SEG" "$VIM_SEG" "$VERSION_SEG")
 [ -n "$LINE3" ] && echo -e "$LINE3"
 exit 0
