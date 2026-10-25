@@ -392,10 +392,10 @@ apply_openskin() {
         --arg toolBar "$s_toolbar" --arg error "$s_error" --arg muted "$s_muted" \
         --arg command "$s_command" --arg background "$s_background" --arg panel "$panel" '
         .theme = $cc
-        | .pluginConfigs["openskin@extras-claude-code"].options += {
+        | .pluginConfigs["openskin@refined-claude-code"].options += {
             accent: $accent, surface: $surface, toolBar: $toolBar, error: $error,
             muted: $muted, command: $command, background: $background }
-        | if $panel != "" then .pluginConfigs["openskin@extras-claude-code"].options.panelBackground = $panel else . end
+        | if $panel != "" then .pluginConfigs["openskin@refined-claude-code"].options.panelBackground = $panel else . end
         ' "$settings" > "$tmp"; then
         chmod --reference="$settings" "$tmp" 2>/dev/null || true
         mv -f "$tmp" "$settings"

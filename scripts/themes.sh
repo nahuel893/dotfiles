@@ -4,7 +4,7 @@
 # reads its colors from here.
 #
 # The seven openskin colors and the Claude Code theme mirror PRESETS in
-# extras-claude-code/plugins/openskin/hooks/skin.tsx; keep them in sync with it.
+# refined-claude-code/plugins/openskin/hooks/skin.tsx; keep them in sync with it.
 # `panelBackground` is deliberately absent: presets leave it as the person set it.
 #
 # One preset per line, fields separated by '|':
