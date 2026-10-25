@@ -59,3 +59,6 @@ export PATH=~/.npm-global/bin:$PATH
 
 # opencode
 export PATH=/home/nh/.opencode/bin:$PATH
+
+# Editor for Claude Code (Ctrl+G, transcript v) and everything else
+export EDITOR=nvim VISUAL=nvim

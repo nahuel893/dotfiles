@@ -75,6 +75,7 @@ link .config/herdr/config.toml
 # ── claude code status line ──
 link .claude/statusline.sh
 chmod +x "$HOME/.claude/statusline.sh"
+link .claude/settings.json
 
 link .zshrc
 

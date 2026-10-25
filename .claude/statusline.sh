@@ -7,15 +7,16 @@ input=$(cat)
 jqr() { jq -r "$1 // empty" <<<"$input" 2>/dev/null; }
 
 # openskin's status panel redraws this line beside the transcript: keep each session's latest
-# input for it. Where the panel is docked it marks the session, and the line here stays empty;
-# the panel runs this script with OPENSKIN_PANEL=1 to get the lines it draws.
+# input for it. Where the panel is docked it marks the session, and the line here keeps only
+# the model and the vim mode; the panel runs this script with OPENSKIN_PANEL=1 to get the rest.
 SESSION_ID=$(jqr '.session_id')
+DOCKED=""
 if [ -n "$SESSION_ID" ]; then
   OPENSKIN=~/.cache/openskin
   mkdir -p "$OPENSKIN/sessions" &&
     printf '%s' "$input" >"$OPENSKIN/sessions/$SESSION_ID.json.tmp" &&
     mv -f "$OPENSKIN/sessions/$SESSION_ID.json.tmp" "$OPENSKIN/sessions/$SESSION_ID.json"
-  [ -z "$OPENSKIN_PANEL" ] && [ -e "$OPENSKIN/docked/$SESSION_ID" ] && exit 0
+  [ -z "$OPENSKIN_PANEL" ] && [ -e "$OPENSKIN/docked/$SESSION_ID" ] && DOCKED=1
 fi
 
 MODEL=$(jqr '.model.display_name')
@@ -47,6 +48,19 @@ CTX_SIZE=$(jqr '.context_window.context_window_size')
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; DIM='\033[2m'; RESET='\033[0m'
 
+# --- vim mode: green while typing, yellow otherwise ---
+VIM_SEG=""
+if [ -n "$VIM_MODE" ]; then
+    VIM_COLOR="$YELLOW"; [ "$VIM_MODE" = "INSERT" ] && VIM_COLOR="$GREEN"
+    VIM_SEG="${VIM_COLOR}⌨ ${VIM_MODE}${RESET}"
+fi
+
+# Docked: the panel shows everything else, so the line under the prompt is the model and the mode.
+if [ -n "$DOCKED" ]; then
+    echo -e "${CYAN}[${MODEL}]${RESET}${VIM_SEG:+  $VIM_SEG}"
+    exit 0
+fi
+
 # --- git branch + dirty state ---
 GIT_SEG=""
 if git -C "$DIR" rev-parse --git-dir >/dev/null 2>&1; then
@@ -71,7 +85,10 @@ WORKTREE_SEG=""
 AGENT_SEG=""
 [ -n "$AGENT" ] && AGENT_SEG=" | 🤖 ${AGENT}"
 
-LINE1="${CYAN}[${MODEL}]${RESET} 📁 ${DIRNAME}${GIT_SEG}${REPO_SEG}${WORKTREE_SEG}${AGENT_SEG}"
+# For the panel, the model and the vim mode stay under the prompt.
+MODEL_SEG="${CYAN}[${MODEL}]${RESET} "
+[ -n "$OPENSKIN_PANEL" ] && MODEL_SEG="" && VIM_SEG=""
+LINE1="${MODEL_SEG}📁 ${DIRNAME}${GIT_SEG}${REPO_SEG}${WORKTREE_SEG}${AGENT_SEG}"
 
 # --- context usage bar ---
 PCT_INT=${PCT%%.*}
@@ -123,7 +140,7 @@ META_PARTS=()
 [ -n "$EFFORT" ] && META_PARTS+=("🎚 ${EFFORT}")
 [ -n "$STYLE" ] && META_PARTS+=("🎨 ${STYLE}")
 [ "$FAST" = "true" ] && META_PARTS+=("⚡fast")
-[ -n "$VIM_MODE" ] && META_PARTS+=("⌨ ${VIM_MODE}")
+[ -n "$VIM_SEG" ] && META_PARTS+=("$VIM_SEG")
 [ -n "$VERSION" ] && META_PARTS+=("${DIM}v${VERSION}${RESET}")
 
 LINE3=$(join_parts "${META_PARTS[@]}")
