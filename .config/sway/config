@@ -27,10 +27,10 @@ output eDP-1    mode 1366x768@60Hz   position 0 1080
 ### Look & feel ───────────────────────────────────────────────────────────
 default_border pixel 2
 default_floating_border pixel 2
-hide_edge_borders smart
+hide_edge_borders none
 gaps inner 5
 gaps outer 8
-smart_gaps on
+smart_gaps off
 font pango:IosevkaTerm Nerd Font 10
 
 # Transparency is opt-in per app.
