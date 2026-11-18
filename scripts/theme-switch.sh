@@ -153,7 +153,9 @@ onboarding = false
 name = "one-dark"
 
 [theme.custom]
-panel_bg = "$BG"
+# "reset" uses the terminal's default background, so kitty's background_opacity
+# shows through. A hex color here is painted opaque over it.
+panel_bg = "reset"
 accent = "$ACCENT"
 green = "$COL2"
 blue = "$COL4"
