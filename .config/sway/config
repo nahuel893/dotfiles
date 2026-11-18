@@ -66,6 +66,7 @@ client.urgent           $urgent   $urgent   $fg   $urgent    $urgent
 ### Input ──────────────────────────────────────────────────────────────────
 input "type:keyboard" {
     xkb_layout us
+    xkb_variant altgr-intl
 }
 input "type:touchpad" {
     natural_scroll disabled
