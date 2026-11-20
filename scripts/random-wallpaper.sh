@@ -10,7 +10,7 @@ WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
 
 # `find` on purpose: these dotfiles bootstrap bare Debian/Arch/Manjaro boxes
 # where fd may be absent (and is named fdfind on Debian).
-wall=$(find "$WALLPAPER_DIR" -type f \
+wall=$(find -L "$WALLPAPER_DIR" -type f \
     \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
     | shuf -n 1)
 

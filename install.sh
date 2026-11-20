@@ -88,6 +88,6 @@ mkdir -p "$HOME/Pictures/wallpapers"
 for wall in "$DOTFILES_DIR"/wallpapers/*; do
     [ -e "$wall" ] || continue
     dest="$HOME/Pictures/wallpapers/$(basename "$wall")"
-    ln -sf "$wall" "$dest"
+    ln -sfn "$wall" "$dest"
     echo "[+] $dest -> $wall"
 done
