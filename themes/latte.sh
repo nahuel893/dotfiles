@@ -26,3 +26,7 @@ ERROR="#D20F39"
 BORDER="#BCC0CC"
 BORDER_INACTIVE="#CCD0DA"
 IS_LIGHT=1
+
+# Default wallpaper for this palette. theme-switch.sh applies it on every
+# switch. Relative to $WALLPAPER_DIR (see wallpapers/README.md for the source).
+WALLPAPER="calm/a_beach_with_trees_on_the_side.jpg"

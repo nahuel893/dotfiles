@@ -26,3 +26,7 @@ ERROR="#FB4934"
 BORDER="#504945"
 BORDER_INACTIVE="#3C3836"
 IS_LIGHT=0
+
+# Default wallpaper for this palette. theme-switch.sh applies it on every
+# switch. Relative to $WALLPAPER_DIR (see wallpapers/README.md for the source).
+WALLPAPER="gruvbox/gruvbox_forest-4.png"

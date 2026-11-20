@@ -26,3 +26,7 @@ ERROR="#BF616A"         # nord11
 BORDER="#434C5E"
 BORDER_INACTIVE="#3B4252"
 IS_LIGHT=0
+
+# Default wallpaper for this palette. theme-switch.sh applies it on every
+# switch. Relative to $WALLPAPER_DIR (see wallpapers/README.md for the source).
+WALLPAPER="nord/a_mountain_landscape_with_trees_and_a_building_on_top.png"

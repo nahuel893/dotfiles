@@ -411,7 +411,7 @@ apply_openskin() {
 echo "$choice" > "$STATE_FILE"
 swaymsg reload          >/dev/null 2>&1 || true
 
-# ── wallpaper (only for palettes generated from one) ──
+# ── wallpaper (only for palettes that declare WALLPAPER) ──
 # Runs after the reload so nothing sway spawns can land on top of it.
 if [ -n "${WALLPAPER:-}" ]; then
     [ -z "${WALLPAPER_DIR:-}" ] && [ -f "$DOTFILES/.env" ] && source "$DOTFILES/.env"

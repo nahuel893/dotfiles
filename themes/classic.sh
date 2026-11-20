@@ -27,3 +27,7 @@ ERROR="#CD0000"         # red
 BORDER="#2A2A2A"
 BORDER_INACTIVE="#161616"
 IS_LIGHT=0
+
+# Default wallpaper for this palette. theme-switch.sh applies it on every
+# switch. Relative to $WALLPAPER_DIR (see wallpapers/README.md for the source).
+WALLPAPER="monochrome/dark-mountain.jpg"
